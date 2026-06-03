@@ -1,0 +1,155 @@
+.page {
+  background: var(--color-bg-page);
+  min-height: calc(100vh - var(--header-height));
+  padding: 4px 8.5px 48px;
+}
+
+.container {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 4px 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heading {
+  margin: 0;
+  padding-bottom: 8px;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 42px;
+  color: var(--color-text-primary);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.introText {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.introLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-link);
+}
+
+.introLink:hover {
+  text-decoration: underline;
+}
+
+.searchRow {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.searchFieldWrap {
+  position: relative;
+  flex: 1;
+}
+
+.searchInput {
+  width: 100%;
+  height: 100%;
+  min-height: 40px;
+  padding: 9px 40px 9px 7px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
+  color: var(--color-text-primary);
+}
+
+.searchInput::placeholder {
+  color: var(--color-text-placeholder);
+}
+
+.clearBtn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.clearBtn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.btnSearch {
+  padding: 8px 12px;
+  background: var(--color-btn-primary);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.sortRow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.sortSelect {
+  flex: 1;
+  height: 40px;
+  padding: 5px 32px 5px 7px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
+  color: var(--color-text-primary);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23373a44' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.sortBtn {
+  padding: 4px 8px;
+  color: var(--color-text-primary);
+}
+
+.createRow {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btnCreate {
+  padding: 8px 12px;
+  background: var(--color-btn-secondary);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.listSection {
+  padding-top: 4px;
+  padding-bottom: 32px;
+}
+
+.objectiveList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

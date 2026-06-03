@@ -1,0 +1,142 @@
+.card {
+  position: relative;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.cardInner {
+  padding: 8px;
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.titleButton {
+  flex: 1;
+  min-width: 0;
+  padding: 12px;
+  text-align: left;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text-primary);
+  border-radius: var(--radius-sm);
+}
+
+.titleButton:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 8px 16px 8px 8px;
+  flex-shrink: 0;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
+.statIcon {
+  color: var(--color-text-primary);
+  flex-shrink: 0;
+}
+
+.details {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid transparent;
+}
+
+.sectionTitle {
+  margin: 0 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem {
+  padding: 8px;
+}
+
+.listItemBordered {
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding-bottom: 9px;
+}
+
+.listItemText {
+  padding: 6px 0;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.pageLink {
+  display: block;
+  padding: 8px;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-link);
+}
+
+.pageLink:hover {
+  text-decoration: underline;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 8px;
+}
+
+.btnDanger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: var(--radius-md);
+  background: var(--color-btn-danger);
+  color: #fff;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.btnNeutral {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: var(--radius-md);
+  background: var(--color-btn-neutral);
+  color: var(--color-text-primary);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.btnPlus {
+  font-weight: 700;
+  font-size: 17.5px;
+  line-height: 1;
+}
