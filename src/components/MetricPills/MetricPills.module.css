@@ -1,0 +1,75 @@
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-4);
+  margin: 0;
+  padding: 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 72px;
+}
+
+.label {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.value {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.valueWarning {
+  color: var(--color-status-error);
+}
+
+.valueMuted {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.coverage {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.coverageNone {
+  background: var(--color-status-error-bg);
+  color: var(--color-status-error);
+}
+
+.coverageWeak {
+  background: var(--color-status-warning-bg);
+  color: var(--color-status-warning);
+}
+
+.coverageModerate {
+  background: var(--color-status-info-bg);
+  color: var(--color-status-info);
+}
+
+.coverageStrong {
+  background: var(--color-status-success-bg);
+  color: var(--color-status-success);
+}
+
+.warningIcon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}

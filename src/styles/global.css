@@ -35,11 +35,18 @@ button {
 
 a {
   color: var(--color-link);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 a:hover {
-  text-decoration: underline;
+  color: var(--color-link-hover);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
 }
 
 img {

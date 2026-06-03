@@ -1,0 +1,83 @@
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+  background: var(--color-status-info-bg);
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-md);
+}
+
+.content {
+  flex: 1;
+  min-width: 200px;
+}
+
+.eyebrow {
+  margin: 0 0 var(--space-1);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-status-info);
+}
+
+.title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 22px;
+  color: var(--color-text-primary);
+}
+
+.empty {
+  margin: var(--space-2) 0 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-text-primary);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.chip {
+  padding: 6px 12px;
+  border: 1px solid #93c5fd;
+  border-radius: 999px;
+  background: var(--color-bg-card);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--color-text-primary);
+  text-align: left;
+}
+
+.chip:hover {
+  border-color: var(--color-link);
+  color: var(--color-link);
+}
+
+.chipActive {
+  background: var(--color-link);
+  border-color: var(--color-link);
+  color: #fff;
+}
+
+.closeBtn {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-status-info);
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+}
+
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.6);
+}

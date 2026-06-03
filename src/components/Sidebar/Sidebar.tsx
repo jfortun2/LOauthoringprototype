@@ -1,3 +1,4 @@
+import { useLayout } from "../../context/LayoutContext";
 import styles from "./Sidebar.module.css";
 
 function NavIconBook() {
@@ -37,8 +38,25 @@ function NavIconGraduate() {
 }
 
 export function Sidebar() {
+  const { workspaceCollapsed, toggleWorkspace } = useLayout();
+
   return (
-    <aside className={styles.sidebar} data-node-id="2:1704">
+    <aside
+      className={`${styles.sidebar} ${workspaceCollapsed ? styles.sidebarCollapsed : ""}`}
+      data-node-id="2:1704"
+      aria-hidden={workspaceCollapsed}
+    >
+      <div className={styles.topBar}>
+        <button
+          type="button"
+          className={styles.collapseBtn}
+          onClick={toggleWorkspace}
+          aria-label="Collapse workspace navigation"
+          title="Collapse workspace"
+        >
+          ‹
+        </button>
+      </div>
       <div className={styles.scroll}>
         <p className={styles.sectionLabel}>Workspace</p>
         <nav className={styles.workspace} aria-label="Workspace roles">

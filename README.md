@@ -26,7 +26,9 @@ Open the URL shown in the terminal (typically `http://localhost:5173`).
 
 ## Features (prototype)
 
-- Course author shell: header, sidebar navigation, Learning Objectives page
-- Search, sort controls, pagination
-- Expandable objective cards with sub-objectives, linked pages, and action buttons
-- Mock chemistry course data matching the Figma sample content
+- **Workspace navigation** (preserved from Figma): Course Author shell, Create → Objectives, etc.
+- **Course content outline** (legacy-inspired): hierarchical pages/activities with LO count badges
+- **Objective-centric view**: each objective shows coverage strength, linked pages, assessments, sub-objectives, and student mastery %
+- **Bidirectional mapping**: select content in the outline → see objectives it supports; expand an objective → see all linked content and assessments (click to jump back to outline)
+- **Gap signals**: warning styling when pages or assessments are missing (like legacy red indicators)
+- Search, create field, pagination, and mock Gardening 101 / chemistry data

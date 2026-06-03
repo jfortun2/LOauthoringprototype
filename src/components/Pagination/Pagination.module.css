@@ -50,3 +50,9 @@
   opacity: 0.4;
   cursor: not-allowed;
 }
+
+.compact {
+  justify-content: flex-end;
+  width: auto;
+  padding: 0;
+}

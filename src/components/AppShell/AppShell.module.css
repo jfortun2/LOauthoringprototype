@@ -3,6 +3,11 @@
   flex-direction: column;
   min-height: 100%;
   background: var(--color-bg-page);
+  --sidebar-current-width: var(--sidebar-width);
+}
+
+.shellWorkspaceCollapsed {
+  --sidebar-current-width: 0px;
 }
 
 .body {
@@ -14,6 +19,35 @@
 .main {
   flex: 1;
   min-width: 0;
-  margin-left: var(--sidebar-width);
+  margin-left: var(--sidebar-current-width);
   padding-top: var(--header-height);
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.2s ease;
+  overflow: hidden;
+}
+
+.workspaceExpandTab {
+  position: fixed;
+  top: calc(var(--header-height) + 12px);
+  left: 0;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 10px 0 6px;
+  height: 36px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  border-left: none;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--color-text-primary);
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: var(--shadow-md);
+}
+
+.workspaceExpandTab:hover {
+  color: var(--color-text-primary);
+  background: var(--color-bg-subtle);
 }

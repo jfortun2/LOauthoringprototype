@@ -15,11 +15,13 @@
 
 .logoArea {
   flex-shrink: 0;
-  width: var(--sidebar-width);
+  width: var(--sidebar-current-width, var(--sidebar-width));
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 8px 16px;
+  overflow: hidden;
+  transition: width 0.2s ease;
 }
 
 .logo {

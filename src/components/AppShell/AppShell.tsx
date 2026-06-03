@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { LayoutProvider, useLayout } from "../../context/LayoutContext";
 import { Header } from "../Header/Header";
 import { Sidebar } from "../Sidebar/Sidebar";
 import styles from "./AppShell.module.css";
@@ -7,14 +8,39 @@ type AppShellProps = {
   children: ReactNode;
 };
 
-export function AppShell({ children }: AppShellProps) {
+function AppShellInner({ children }: AppShellProps) {
+  const { workspaceCollapsed, toggleWorkspace } = useLayout();
+
   return (
-    <div className={styles.shell} data-node-id="2:1262">
+    <div
+      className={`${styles.shell} ${workspaceCollapsed ? styles.shellWorkspaceCollapsed : ""}`}
+      data-node-id="2:1262"
+      data-workspace-collapsed={workspaceCollapsed}
+    >
       <Header />
       <div className={styles.body}>
         <Sidebar />
+        {workspaceCollapsed && (
+          <button
+            type="button"
+            className={styles.workspaceExpandTab}
+            onClick={toggleWorkspace}
+            aria-label="Expand workspace navigation"
+            title="Expand workspace"
+          >
+            › Workspace
+          </button>
+        )}
         <main className={styles.main}>{children}</main>
       </div>
     </div>
+  );
+}
+
+export function AppShell({ children }: AppShellProps) {
+  return (
+    <LayoutProvider>
+      <AppShellInner>{children}</AppShellInner>
+    </LayoutProvider>
   );
 }
