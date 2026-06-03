@@ -9,9 +9,15 @@ type ActivityTab = "formative" | "summative";
 type SubObjectiveActivitiesProps = {
   activities: SubObjectiveActivity[];
   subObjectiveId: string;
+  onActivityClick?: (activity: SubObjectiveActivity) => void;
 };
 
-export function SubObjectiveActivities({ activities, subObjectiveId }: SubObjectiveActivitiesProps) {
+export function SubObjectiveActivities({
+  activities: activitiesProp,
+  subObjectiveId,
+  onActivityClick,
+}: SubObjectiveActivitiesProps) {
+  const activities = activitiesProp ?? [];
   const baseId = useId();
   const formative = activities.filter((a) => a.type === "formative");
   const summative = activities.filter((a) => a.type === "summative");
@@ -19,7 +25,7 @@ export function SubObjectiveActivities({ activities, subObjectiveId }: SubObject
 
   useEffect(() => {
     setTab(defaultActivityTab(activities));
-  }, [subObjectiveId, activities]);
+  }, [subObjectiveId]);
 
   const visible = tab === "formative" ? formative : summative;
   const panelId = `${baseId}-panel`;
@@ -86,6 +92,7 @@ export function SubObjectiveActivities({ activities, subObjectiveId }: SubObject
                         ? styles.activityItemFormative
                         : styles.activityItemSummative
                     }`}
+                    onClick={() => onActivityClick?.(activity)}
                   >
                     <span
                       className={`${styles.activityIconWrap} ${

@@ -1,0 +1,38 @@
+.preview {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.formative,
+.summative {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.formative {
+  background: var(--color-accent-blue);
+  color: var(--color-text-accent-blue);
+}
+
+.summative {
+  background: var(--color-accent-orange);
+  color: var(--color-text-accent-orange);
+}
+
+.icon {
+  width: 14px;
+  height: 14px;
+}
+
+.count {
+  min-width: 10px;
+  text-align: center;
+}

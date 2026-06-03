@@ -1,0 +1,228 @@
+.mapWrap {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: var(--color-bg-subtle);
+}
+
+.hint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-text-muted);
+  max-width: 420px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+.legendSwatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.scrollArea {
+  overflow: auto;
+  max-height: 420px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(140px, 180px) repeat(var(--column-count, 4), 36px);
+  min-width: min-content;
+}
+
+.groupRow,
+.headerRow,
+.dataRow {
+  display: contents;
+}
+
+.cornerCell {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  background: var(--color-bg-subtle);
+  border-right: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.groupCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 32px;
+  padding: 4px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-subtle);
+  border-right: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.expandBtn {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  background: var(--color-bg-card);
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.expandBtn:hover {
+  background: var(--color-bg-subtle);
+}
+
+.groupLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cornerLabel {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+  padding: 8px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.columnHead {
+  position: relative;
+  height: 72px;
+  border-right: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: var(--color-bg-subtle);
+}
+
+.columnHeadText {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-20%) rotate(-45deg);
+  transform-origin: left bottom;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  max-width: 96px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rowLabel {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  min-height: 40px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+  color: var(--color-text-primary);
+  background: var(--color-bg-card);
+  border-right: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cell {
+  width: 36px;
+  height: 40px;
+  padding: 6px;
+  border-right: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+  background-clip: content-box;
+  border-radius: 0;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.cell::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.cell:hover {
+  transform: scale(1.08);
+  z-index: 1;
+}
+
+.cellSelected::after {
+  box-shadow: var(--focus-ring);
+  border-color: var(--color-border-bold);
+}
+
+.intensity0::after {
+  background: #f3f4f8;
+}
+
+.intensity1::after {
+  background: #e8f1fc;
+}
+
+.intensity2::after {
+  background: #c5daf4;
+}
+
+.intensity3::after {
+  background: #7eb0e8;
+}
+
+.intensity4::after {
+  background: #0073e5;
+}
+
+.detailWrap {
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.emptyMap {
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
