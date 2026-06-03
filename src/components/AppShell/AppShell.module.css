@@ -1,29 +1,27 @@
 .shell {
   display: flex;
-  flex-direction: column;
   min-height: 100%;
   background: var(--color-bg-page);
-  --sidebar-current-width: var(--sidebar-width);
 }
 
-.shellWorkspaceCollapsed {
-  --sidebar-current-width: 0px;
-}
-
-.body {
-  display: flex;
+.mainColumn {
   flex: 1;
-  min-height: 0;
+  min-width: 0;
+  margin-left: var(--sidebar-width);
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.2s ease;
+}
+
+.shellWorkspaceCollapsed .mainColumn {
+  margin-left: 0;
 }
 
 .main {
   flex: 1;
   min-width: 0;
-  margin-left: var(--sidebar-current-width);
-  padding-top: var(--header-height);
   display: flex;
   flex-direction: column;
-  transition: margin-left 0.2s ease;
   overflow: hidden;
 }
 
@@ -48,6 +46,5 @@
 }
 
 .workspaceExpandTab:hover {
-  color: var(--color-text-primary);
   background: var(--color-bg-subtle);
 }

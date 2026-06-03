@@ -4,19 +4,29 @@
   --color-bg-subtle: #f8f9fb;
   --color-bg-sidebar-active: #f4cfff;
   --color-bg-nav-item-active: #e6e9f2;
-  --color-text-primary: #373a44;
+  --color-bg-table-select: #deecff;
+  --color-text-primary: #353740;
   --color-text-nav: #353740;
+  --color-text-secondary: #45464c;
   --color-text-muted: #757682;
   --color-text-placeholder: #737373;
+  --color-text-accent-blue: #1b67b2;
+  --color-text-accent-orange: #a94f0e;
+  --color-text-button: #006cd9;
   --color-link: #3b76d3;
   --color-link-hover: #2a5fb8;
-  --color-btn-primary: #0165d9;
-  --color-btn-secondary: #3b76d3;
+  --color-btn-primary: #0073e5;
+  --color-btn-secondary: #006cd9;
   --color-btn-danger: #ef4444;
   --color-btn-neutral: #f0f1f4;
-  --color-border: #d4d4d4;
-  --color-border-light: #e5e7eb;
+  --color-border: #ced1d9;
+  --color-border-bold: #8ab8e5;
+  --color-border-light: #ced1d9;
   --color-border-subtle: #eef0f3;
+  --color-border-muted: #f3f4f8;
+  --color-accent-blue: #deecff;
+  --color-accent-orange: #ffecde;
+  --color-accent-muted: #e6e9f2;
   --color-avatar: #004a9f;
   --color-exit-bg: rgba(161, 161, 170, 0.2);
 
@@ -30,13 +40,12 @@
   --color-status-info-bg: #eff6ff;
 
   --font-sans: "Open Sans", system-ui, sans-serif;
-  --font-heading: "Roboto", var(--font-sans);
+  --font-heading: "Open Sans", var(--font-sans);
 
-  --sidebar-width: 200px;
-  --outline-width: 280px;
-  --outline-rail-width: 40px;
-  --header-height: 56px;
-  --content-max-width: 960px;
+  --sidebar-width: 190px;
+  --outline-width: 360px;
+  --header-height: 47px;
+  --content-max-width: none;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -48,8 +57,11 @@
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-pill: 999px;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-sm: 0 2px 5px rgba(0, 50, 99, 0.05);
+  --shadow-md: 0 2px 10px rgba(0, 50, 99, 0.1);
+  --shadow-btn: 0 2px 4px rgba(0, 52, 99, 0.1);
   --focus-ring: 0 0 0 2px #fff, 0 0 0 4px var(--color-link);
 }

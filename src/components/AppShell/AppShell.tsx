@@ -14,12 +14,11 @@ function AppShellInner({ children }: AppShellProps) {
   return (
     <div
       className={`${styles.shell} ${workspaceCollapsed ? styles.shellWorkspaceCollapsed : ""}`}
-      data-node-id="2:1262"
       data-workspace-collapsed={workspaceCollapsed}
     >
-      <Header />
-      <div className={styles.body}>
-        <Sidebar />
+      <Sidebar />
+      <div className={styles.mainColumn}>
+        <Header />
         {workspaceCollapsed && (
           <button
             type="button"

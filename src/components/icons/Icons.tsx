@@ -223,3 +223,66 @@ export function IconPencil({ className }: IconProps) {
     </svg>
   );
 }
+
+export function IconPlus({ className }: IconProps) {
+  return (
+    <svg className={className} width="16" height="16" viewBox="0 0 16 16" aria-hidden>
+      <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function IconClipboardList({ className }: IconProps) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 20 20" aria-hidden>
+      <rect x="5" y="2" width="10" height="14" rx="1" stroke="currentColor" strokeWidth="1.2" fill="none" />
+      <path d="M8 6h4M8 9h4M8 12h2" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function IconFlag({ className }: IconProps) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 20 20" aria-hidden>
+      <path
+        d="M5 3v14M5 3h9l-2 3 2 3H5"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        fill="none"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function IconCircleChevronLeft({ className }: IconProps) {
+  return (
+    <svg className={className} width="30" height="30" viewBox="0 0 30 30" aria-hidden>
+      <circle cx="15" cy="15" r="14" stroke="currentColor" strokeWidth="1" fill="#fff" />
+      <path
+        d="M17 10l-5 5 5 5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function IconCircleChevronRight({ className }: IconProps) {
+  return (
+    <svg className={className} width="30" height="30" viewBox="0 0 30 30" aria-hidden>
+      <circle cx="15" cy="15" r="14" stroke="currentColor" strokeWidth="1" fill="#fff" />
+      <path
+        d="M13 10l5 5-5 5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}

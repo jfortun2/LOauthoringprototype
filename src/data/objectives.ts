@@ -1,16 +1,34 @@
-import type { LearningObjective } from "./types";
+import type { LearningObjective, LearningObjectiveDraft, ObjectiveTagCounts } from "./types";
+import { enrichSubObjective } from "../utils/subObjectiveActivities";
 
 export const TOTAL_OBJECTIVES = 160;
-export const COURSE_ORGANIZATION = "Gardening 101";
+export const COURSE_ORGANIZATION = "Test Authoring Course";
 
-export const objectives: LearningObjective[] = [
+const rawObjectives: LearningObjectiveDraft[] = [
   {
     id: "1",
     title: "Predict electron filling from energy splitting in complexes.",
-    subObjectiveItems: [
-      "Rank ligand field strength and predict whether a complex is high-spin or low-spin.",
-      "Draw crystal field splitting diagrams for octahedral and tetrahedral geometries.",
-      "Use electron configurations to predict the number of unpaired electrons in a transition-metal complex.",
+    subObjectives: [
+      {
+        id: "1-1",
+        title:
+          "Rank ligand field strength and predict whether a complex is high-spin or low-spin.",
+        formativeCount: 2,
+        summativeCount: 1,
+      },
+      {
+        id: "1-2",
+        title: "Draw crystal field splitting diagrams for octahedral and tetrahedral geometries.",
+        formativeCount: 2,
+        summativeCount: 2,
+      },
+      {
+        id: "1-3",
+        title:
+          "Use electron configurations to predict the number of unpaired electrons in a transition-metal complex.",
+        formativeCount: 3,
+        summativeCount: 3,
+      },
     ],
     linkedPages: [
       { id: "page-1", title: "Crystal Field Theory Intro", path: "Unit 1 › Module 1" },
@@ -19,18 +37,45 @@ export const objectives: LearningObjective[] = [
     linkedAssessments: [
       { id: "act-1", title: "Practice: Splitting Diagrams", type: "formative" },
     ],
+    tagCounts: { pages: 5, subObjectives: 3, formative: 7, summative: 6 },
     coverage: "moderate",
     performancePercent: 72,
   },
   {
     id: "2",
     title:
-      "Apply equilibrium concepts to acids and bases that may donate or accept more than one proton.",
-    subObjectiveItems: [
-      "Use values from ICE table with the Ka or Kb expression to determine hydronium or hydroxide concentrations.",
-      "Given concentrations of species, calculate Ka and Kb.",
-      "Determine relative concentrations of species using an ICE table.",
-      "Calculate [H3O+] from pH (and vice versa) and calculate [OH-] from pOH (and vice versa).",
+      "Apply stoichiometric relationships to calculate amounts of substances involved in chemical reactions.",
+    subObjectives: [
+      {
+        id: "2-1",
+        title:
+          "Use values from ICE table with the Ka or Kb expression to determine hydronium or hydroxide concentrations.",
+        formativeCount: 3,
+        summativeCount: 3,
+        activityLinks: [
+          "survey_ins_diary14-q10",
+          "survey_ins_diary12-q10",
+          "survey_ins_diary06-q8",
+        ],
+      },
+      {
+        id: "2-2",
+        title: "Given concentrations of species, calculate Ka and Kb.",
+        formativeCount: 3,
+        summativeCount: 3,
+      },
+      {
+        id: "2-3",
+        title: "Determine relative concentrations of species using an ICE table.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
+      {
+        id: "2-4",
+        title: "Calculate [H3O+] from pH (and vice versa) and calculate [OH-] from pOH (and vice versa).",
+        formativeCount: 0,
+        summativeCount: 0,
+      },
     ],
     linkedPages: [
       { id: "page-3", title: "Polyprotic Acids", path: "Unit 2 › Module 2" },
@@ -48,10 +93,25 @@ export const objectives: LearningObjective[] = [
     id: "3",
     title:
       "Apply stoichiometric relationships to calculate amounts of substances involved in chemical reactions.",
-    subObjectiveItems: [
-      "Convert between mass, moles, and particle count using molar mass and Avogadro's number.",
-      "Balance chemical equations and identify the limiting reactant.",
-      "Calculate theoretical yield and percent yield from experimental data.",
+    subObjectives: [
+      {
+        id: "3-1",
+        title: "Convert between mass, moles, and particle count using molar mass and Avogadro's number.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
+      {
+        id: "3-2",
+        title: "Balance chemical equations and identify the limiting reactant.",
+        formativeCount: 2,
+        summativeCount: 1,
+      },
+      {
+        id: "3-3",
+        title: "Calculate theoretical yield and percent yield from experimental data.",
+        formativeCount: 1,
+        summativeCount: 1,
+      },
     ],
     linkedPages: [
       { id: "page-7", title: "Limiting Reactant", path: "Unit 3 › Module 4" },
@@ -65,10 +125,27 @@ export const objectives: LearningObjective[] = [
   {
     id: "4",
     title: "Apply the Henderson-Hasselbalch Equation to buffer calculations.",
-    subObjectiveItems: [
-      "Calculate the pH of a buffer given concentrations of weak acid and conjugate base.",
-      "Determine how much strong acid or base is needed to reach a target pH in a buffered solution.",
-      "Explain why buffers resist large changes in pH upon addition of small amounts of acid or base.",
+    subObjectives: [
+      {
+        id: "4-1",
+        title: "Calculate the pH of a buffer given concentrations of weak acid and conjugate base.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
+      {
+        id: "4-2",
+        title:
+          "Determine how much strong acid or base is needed to reach a target pH in a buffered solution.",
+        formativeCount: 1,
+        summativeCount: 1,
+      },
+      {
+        id: "4-3",
+        title:
+          "Explain why buffers resist large changes in pH upon addition of small amounts of acid or base.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
     ],
     linkedPages: [
       { id: "page-6", title: "Henderson-Hasselbalch", path: "Unit 2 › Module 3" },
@@ -83,10 +160,26 @@ export const objectives: LearningObjective[] = [
     id: "5",
     title:
       "Apply the Law of Mass action to calculate equilibrium constants and concentrations",
-    subObjectiveItems: [
-      "Write equilibrium expressions from balanced chemical equations.",
-      "Calculate Kc or Kp from equilibrium concentration or pressure data.",
-      "Use reaction quotients to predict the direction a system will shift to reach equilibrium.",
+    subObjectives: [
+      {
+        id: "5-1",
+        title: "Write equilibrium expressions from balanced chemical equations.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
+      {
+        id: "5-2",
+        title: "Calculate Kc or Kp from equilibrium concentration or pressure data.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
+      {
+        id: "5-3",
+        title:
+          "Use reaction quotients to predict the direction a system will shift to reach equilibrium.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
     ],
     linkedPages: [],
     linkedAssessments: [
@@ -99,9 +192,21 @@ export const objectives: LearningObjective[] = [
     id: "6",
     title:
       "Apply the Law of Mass action to calculate equilibrium constants and concentrations.",
-    subObjectiveItems: [
-      "Solve for unknown equilibrium concentrations using ICE tables and the equilibrium constant.",
-      "Relate the magnitude of K to whether products or reactants are favored at equilibrium.",
+    subObjectives: [
+      {
+        id: "6-1",
+        title:
+          "Solve for unknown equilibrium concentrations using ICE tables and the equilibrium constant.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
+      {
+        id: "6-2",
+        title:
+          "Relate the magnitude of K to whether products or reactants are favored at equilibrium.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
     ],
     linkedPages: [],
     linkedAssessments: [
@@ -114,14 +219,28 @@ export const objectives: LearningObjective[] = [
     id: "7",
     title:
       "Assess the relative strengths of acids and bases according to their ionization constants.",
-    subObjectiveItems: [
-      "Compare Ka and Kb values to rank acids and bases from strongest to weakest.",
-      "Predict whether a salt solution will be acidic, basic, or neutral from its constituent ions.",
-      "Use ionization constants to estimate percent ionization for weak acids and bases.",
+    subObjectives: [
+      {
+        id: "7-1",
+        title: "Compare Ka and Kb values to rank acids and bases from strongest to weakest.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
+      {
+        id: "7-2",
+        title: "Predict whether a salt solution will be acidic, basic, or neutral from its constituent ions.",
+        formativeCount: 1,
+        summativeCount: 1,
+      },
+      {
+        id: "7-3",
+        title: "Use ionization constants to estimate percent ionization for weak acids and bases.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
     ],
     linkedPages: [
       { id: "page-3", title: "Polyprotic Acids", path: "Unit 2 › Module 2" },
-      { id: "page-4", title: "Strong and Weak Acids and Bases Summary", path: "Unit 2 › Module 2" },
     ],
     linkedAssessments: [],
     coverage: "weak",
@@ -129,25 +248,48 @@ export const objectives: LearningObjective[] = [
   },
   {
     id: "8",
-    title: "Assign oxidation states to compounds.",
-    subObjectiveItems: [
-      "Apply oxidation-state rules to atoms in ionic and molecular compounds.",
-      "Identify which species is oxidized and which is reduced in a redox reaction.",
-      "Balance redox half-reactions in acidic and basic solution.",
+    title: "Calculate pressure, volume, temperature, and moles using the ideal gas law.",
+    subObjectives: [
+      {
+        id: "8-1",
+        title: "Apply PV = nRT to solve for any one variable given the others.",
+        formativeCount: 2,
+        summativeCount: 1,
+      },
+      {
+        id: "8-2",
+        title: "Use the combined gas law and Dalton's law of partial pressures in multi-step problems.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
     ],
     linkedPages: [],
-    linkedAssessments: [
-      { id: "act-6", title: "Faraday's Law Practice", type: "formative" },
-    ],
-    coverage: "weak",
-    performancePercent: 67,
+    linkedAssessments: [],
+    coverage: "none",
+    performancePercent: null,
   },
   {
     id: "9",
-    title: "calc_k_exp_data",
-    subObjectiveItems: [
-      "Extract equilibrium constant data from experimental concentration measurements.",
-      "Evaluate whether calculated K values are consistent across multiple trials.",
+    title: "Predict the sign and magnitude of entropy changes for chemical processes.",
+    subObjectives: [
+      {
+        id: "9-1",
+        title: "Calculate ΔS° from standard molar entropies for reactants and products.",
+        formativeCount: 2,
+        summativeCount: 1,
+      },
+      {
+        id: "9-2",
+        title: "Predict whether entropy increases or decreases for phase changes and reactions.",
+        formativeCount: 1,
+        summativeCount: 1,
+      },
+      {
+        id: "9-3",
+        title: "Relate disorder at the molecular level to macroscopic entropy changes.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
     ],
     linkedPages: [],
     linkedAssessments: [],
@@ -156,68 +298,112 @@ export const objectives: LearningObjective[] = [
   },
   {
     id: "10",
-    title: "Calculate amounts of reacting substances during electrolysis.",
-    subObjectiveItems: [
-      "Relate current, time, and charge to moles of electrons transferred in an electrochemical cell.",
-      "Calculate mass of metal deposited or gas produced at an electrode.",
-      "Distinguish between quantities produced at the anode versus the cathode in electrolysis.",
+    title: "Determine whether a reaction is spontaneous under given conditions.",
+    subObjectives: [
+      {
+        id: "10-1",
+        title: "Use ΔG = ΔH − TΔS to predict spontaneity at various temperatures.",
+        formativeCount: 2,
+        summativeCount: 1,
+      },
+      {
+        id: "10-2",
+        title: "Interpret Gibbs free energy diagrams for coupled reactions.",
+        formativeCount: 1,
+        summativeCount: 1,
+      },
+      {
+        id: "10-3",
+        title: "Distinguish between thermodynamic favorability and reaction rate.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
     ],
-    linkedPages: [
-      { id: "page-10", title: "Electrolysis Calculations", path: "Unit 4 › Module 6" },
-    ],
-    linkedAssessments: [
-      { id: "act-6", title: "Faraday's Law Practice", type: "formative" },
-    ],
-    coverage: "moderate",
-    performancePercent: 73,
+    linkedPages: [],
+    linkedAssessments: [],
+    coverage: "none",
+    performancePercent: null,
   },
   {
     id: "11",
-    title:
-      "Calculate amounts/concentrations of species and pH after adding strong acid or base to a buffer.",
-    subObjectiveItems: [
-      "Set up stoichiometric tables for strong acid or base added to a buffer solution.",
-      "Recalculate conjugate acid and base concentrations after the neutralization step.",
-      "Apply the Henderson-Hasselbalch equation to the post-addition mixture.",
-      "Judge whether the buffer capacity has been exceeded and the solution is no longer buffering.",
+    title: "Interpret reaction rate data and rate laws.",
+    subObjectives: [
+      {
+        id: "11-1",
+        title: "Determine reaction order from experimental rate data.",
+        formativeCount: 2,
+        summativeCount: 1,
+      },
+      {
+        id: "11-2",
+        title: "Write rate laws from initial rates and concentration changes.",
+        formativeCount: 2,
+        summativeCount: 1,
+      },
+      {
+        id: "11-3",
+        title: "Explain how temperature and catalysts affect reaction rates.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
     ],
-    linkedPages: [
-      { id: "page-6", title: "Henderson-Hasselbalch", path: "Unit 2 › Module 3" },
-    ],
-    linkedAssessments: [
-      { id: "act-4", title: "Buffer Capacity Lab", type: "formative" },
-    ],
-    coverage: "moderate",
-    performancePercent: 49,
+    linkedPages: [],
+    linkedAssessments: [],
+    coverage: "weak",
+    performancePercent: 38,
   },
   {
     id: "12",
-    title: "Calculate binding energy for nuclei.",
-    subObjectiveItems: [
-      "Calculate mass defect from nuclear masses of protons, neutrons, and the nucleus.",
-      "Convert mass defect to binding energy using E = mc².",
-      "Compare binding energy per nucleon across isotopes to identify unusually stable nuclei.",
+    title: "Balance redox equations using the half-reaction method.",
+    subObjectives: [
+      {
+        id: "12-1",
+        title: "Identify oxidation and reduction half-reactions in aqueous solutions.",
+        formativeCount: 2,
+        summativeCount: 1,
+      },
+      {
+        id: "12-2",
+        title: "Balance electrons and atoms in acidic and basic media.",
+        formativeCount: 2,
+        summativeCount: 1,
+      },
+      {
+        id: "12-3",
+        title: "Combine half-reactions to write balanced overall redox equations.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
     ],
-    linkedPages: [
-      { id: "page-11", title: "Mass Defect & Binding Energy", path: "Unit 4 › Module 7" },
-    ],
-    linkedAssessments: [
-      { id: "act-7", title: "Nuclear Stability Assessment", type: "summative" },
-    ],
-    coverage: "moderate",
-    performancePercent: 76,
+    linkedPages: [],
+    linkedAssessments: [],
+    coverage: "weak",
+    performancePercent: 44,
   },
   {
     id: "13",
-    title: "Calculate enthalpy changes for various chemical reactions.",
-    subObjectiveItems: [
-      "Use Hess's law to combine thermochemical equations and find overall ΔH.",
-      "Calculate enthalpy change from standard enthalpies of formation.",
-      "Interpret enthalpy diagrams for exothermic and endothermic processes.",
+    title: "Describe the relationship between cell potential and free energy.",
+    subObjectives: [
+      {
+        id: "13-1",
+        title: "Calculate ΔG° from standard cell potentials using ΔG° = −nFE°.",
+        formativeCount: 2,
+        summativeCount: 1,
+      },
+      {
+        id: "13-2",
+        title: "Use the Nernst equation to find cell potential under non-standard conditions.",
+        formativeCount: 2,
+        summativeCount: 1,
+      },
+      {
+        id: "13-3",
+        title: "Relate standard reduction potentials to the direction of spontaneous redox reactions.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
     ],
-    linkedPages: [
-      { id: "page-8", title: "Enthalpy & Hess's Law", path: "Unit 3 › Module 5" },
-    ],
+    linkedPages: [],
     linkedAssessments: [],
     coverage: "weak",
     performancePercent: 38,
@@ -225,10 +411,25 @@ export const objectives: LearningObjective[] = [
   {
     id: "14",
     title: "Calculate heat transferred in chemical and physical processes.",
-    subObjectiveItems: [
-      "Apply q = mcΔT to calculate heat absorbed or released in temperature changes.",
-      "Use specific heat and heat of fusion or vaporization in phase-change calculations.",
-      "Distinguish between heat flow at constant pressure (ΔH) and constant volume (ΔU).",
+    subObjectives: [
+      {
+        id: "14-1",
+        title: "Apply q = mcΔT to calculate heat absorbed or released in temperature changes.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
+      {
+        id: "14-2",
+        title: "Use specific heat and heat of fusion or vaporization in phase-change calculations.",
+        formativeCount: 1,
+        summativeCount: 0,
+      },
+      {
+        id: "14-3",
+        title: "Distinguish between heat flow at constant pressure (ΔH) and constant volume (ΔU).",
+        formativeCount: 0,
+        summativeCount: 1,
+      },
     ],
     linkedPages: [
       { id: "page-9", title: "Heat Capacity", path: "Unit 3 › Module 5" },
@@ -239,10 +440,37 @@ export const objectives: LearningObjective[] = [
   },
 ];
 
-export function getObjectiveCounts(objective: LearningObjective) {
+export const objectives: LearningObjective[] = rawObjectives.map((objective) => ({
+  ...objective,
+  subObjectives: objective.subObjectives.map((sub) => enrichSubObjective(sub)),
+}));
+
+export function getObjectiveTagCounts(objective: LearningObjective): ObjectiveTagCounts {
+  if (objective.tagCounts) return objective.tagCounts;
+
+  const formativeFromSubs = objective.subObjectives.reduce((n, s) => n + s.formativeCount, 0);
+  const summativeFromSubs = objective.subObjectives.reduce((n, s) => n + s.summativeCount, 0);
+  const formativeFromLinked = objective.linkedAssessments.filter(
+    (a) => a.type === "formative",
+  ).length;
+  const summativeFromLinked = objective.linkedAssessments.filter(
+    (a) => a.type === "summative",
+  ).length;
+
   return {
-    subObjectives: objective.subObjectiveItems.length,
     pages: objective.linkedPages.length,
-    activities: objective.linkedAssessments.length,
+    subObjectives: objective.subObjectives.length,
+    formative: Math.max(formativeFromSubs, formativeFromLinked),
+    summative: Math.max(summativeFromSubs, summativeFromLinked),
+  };
+}
+
+/** @deprecated Use getObjectiveTagCounts */
+export function getObjectiveCounts(objective: LearningObjective) {
+  const tags = getObjectiveTagCounts(objective);
+  return {
+    subObjectives: tags.subObjectives,
+    pages: tags.pages,
+    activities: tags.formative + tags.summative,
   };
 }

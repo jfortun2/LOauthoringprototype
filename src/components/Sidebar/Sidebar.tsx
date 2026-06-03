@@ -1,15 +1,13 @@
 import { useLayout } from "../../context/LayoutContext";
+import { COURSE_TITLE_SHORT } from "../../data/courseUnits";
+import { IconChevronLeft } from "../icons/Icons";
 import styles from "./Sidebar.module.css";
 
 function NavIconBook() {
   return (
     <span className={styles.navIcon} aria-hidden>
       <svg width="20" height="24" viewBox="0 0 20 24" fill="none">
-        <path
-          d="M2 3h7v18H2V3zm9 0h7v18h-7V3z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
+        <path d="M2 3h7v18H2V3zm9 0h7v18h-7V3z" stroke="currentColor" strokeWidth="1.5" />
       </svg>
     </span>
   );
@@ -43,20 +41,28 @@ export function Sidebar() {
   return (
     <aside
       className={`${styles.sidebar} ${workspaceCollapsed ? styles.sidebarCollapsed : ""}`}
-      data-node-id="2:1704"
       aria-hidden={workspaceCollapsed}
     >
-      <div className={styles.topBar}>
+      <div className={styles.logoBar}>
+        <img
+          className={styles.logo}
+          src="/assets/oli-torus-logo.png"
+          alt="OLI Torus"
+        />
+      </div>
+
+      <div className={styles.minimizeWrap}>
         <button
           type="button"
-          className={styles.collapseBtn}
+          className={styles.minimizeBtn}
           onClick={toggleWorkspace}
           aria-label="Collapse workspace navigation"
           title="Collapse workspace"
         >
-          ‹
+          <IconChevronLeft />
         </button>
       </div>
+
       <div className={styles.scroll}>
         <p className={styles.sectionLabel}>Workspace</p>
         <nav className={styles.workspace} aria-label="Workspace roles">
@@ -74,7 +80,7 @@ export function Sidebar() {
           </button>
         </nav>
 
-        <p className={styles.courseName}>Gardening 101</p>
+        <p className={styles.courseName}>{COURSE_TITLE_SHORT}</p>
 
         <nav className={styles.navGroup} aria-label="Course navigation">
           <button type="button" className={`${styles.navItem} ${styles.navItemMuted}`}>
@@ -101,11 +107,7 @@ export function Sidebar() {
               </span>
             </button>
             <div className={styles.submenu}>
-              <button
-                type="button"
-                className={`${styles.submenuItem} ${styles.submenuItemActive}`}
-                data-node-id="2:1757"
-              >
+              <button type="button" className={`${styles.submenuItem} ${styles.submenuItemActive}`}>
                 Objectives
               </button>
               <button type="button" className={styles.submenuItem}>
