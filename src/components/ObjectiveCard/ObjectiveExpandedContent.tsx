@@ -63,7 +63,10 @@ export function ObjectiveExpandedContent({
           role="tab"
           aria-selected={view === "hierarchy"}
           className={`${styles.viewBtn} ${view === "hierarchy" ? styles.viewBtnActive : ""}`}
-          onClick={() => setView("hierarchy")}
+          onClick={(event) => {
+            event.stopPropagation();
+            setView("hierarchy");
+          }}
         >
           Hierarchy
         </button>
@@ -72,15 +75,17 @@ export function ObjectiveExpandedContent({
           role="tab"
           aria-selected={view === "coverage"}
           className={`${styles.viewBtn} ${view === "coverage" ? styles.viewBtnActive : ""}`}
-          onClick={() => setView("coverage")}
+          onClick={(event) => {
+            event.stopPropagation();
+            setView("coverage");
+          }}
         >
           Coverage map
         </button>
       </div>
 
-      {view === "hierarchy" ? (
-        <>
-          <section className={styles.section} aria-labelledby={`${objective.id}-subs`}>
+      <div className={view === "hierarchy" ? undefined : styles.hiddenPanel}>
+        <section className={styles.section} aria-labelledby={`${objective.id}-subs`}>
             <div className={styles.sectionHeader}>
               <h4 className={styles.sectionTitle} id={`${objective.id}-subs`}>
                 Sub-Objectives
@@ -184,16 +189,18 @@ export function ObjectiveExpandedContent({
                 ))}
               </div>
             )}
-          </section>
-        </>
-      ) : (
-        <section className={styles.section} aria-labelledby={`${objective.id}-coverage`}>
-          <h4 className={styles.sectionTitle} id={`${objective.id}-coverage`}>
-            coverage
-          </h4>
-          <CoverageHeatmap objective={objective} onSelectContent={onSelectContent} />
         </section>
-      )}
+      </div>
+
+      <section
+        className={`${styles.section} ${view === "coverage" ? undefined : styles.hiddenPanel}`}
+        aria-labelledby={`${objective.id}-coverage`}
+      >
+        <h4 className={styles.sectionTitle} id={`${objective.id}-coverage`}>
+          coverage
+        </h4>
+        <CoverageHeatmap objective={objective} onSelectContent={onSelectContent} />
+      </section>
 
       {contentDetail && view === "hierarchy" && (
         <ContentDetailPanel

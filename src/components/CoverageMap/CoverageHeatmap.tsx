@@ -38,20 +38,23 @@ function intensityClass(intensity: CoverageIntensity) {
 }
 
 export function CoverageHeatmap({ objective, onSelectContent }: CoverageHeatmapProps) {
-  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(() => new Set());
+  const [expandedGroupIds, setExpandedGroupIds] = useState<string[]>([]);
   const [selection, setSelection] = useState<ContentDetailSelection | null>(null);
   const [cellItems, setCellItems] = useState<CoverageContentItem[]>([]);
 
+  const expandedGroupSet = useMemo(() => new Set(expandedGroupIds), [expandedGroupIds]);
+
   const coverageMap = useMemo(
-    () => buildObjectiveCoverageMap(objective, expandedGroups),
-    [objective, expandedGroups],
+    () => buildObjectiveCoverageMap(objective, expandedGroupSet),
+    [objective, expandedGroupIds],
   );
   const { groups, columns, rows } = coverageMap;
 
   const hasExpandableGroups = groups.some((group) => group.children.length > 0);
+  const columnCount = Math.max(columns.length, 1);
 
   useEffect(() => {
-    setExpandedGroups(new Set());
+    setExpandedGroupIds([]);
     setSelection(null);
     setCellItems([]);
   }, [objective.id]);
@@ -81,12 +84,9 @@ export function CoverageHeatmap({ objective, onSelectContent }: CoverageHeatmapP
   };
 
   const toggleGroup = (groupId: string) => {
-    setExpandedGroups((prev) => {
-      const next = new Set(prev);
-      if (next.has(groupId)) next.delete(groupId);
-      else next.add(groupId);
-      return next;
-    });
+    setExpandedGroupIds((prev) =>
+      prev.includes(groupId) ? prev.filter((id) => id !== groupId) : [...prev, groupId],
+    );
     setSelection(null);
     setCellItems([]);
   };
@@ -96,7 +96,7 @@ export function CoverageHeatmap({ objective, onSelectContent }: CoverageHeatmapP
   }
 
   const gridStyle = {
-    "--column-count": String(columns.length),
+    "--column-count": String(columnCount),
   } as CSSProperties;
 
   return (
@@ -118,11 +118,11 @@ export function CoverageHeatmap({ objective, onSelectContent }: CoverageHeatmapP
       <div className={styles.scrollArea}>
         <div className={styles.grid} style={gridStyle}>
           {hasExpandableGroups && (
-            <div className={styles.groupRow}>
+            <div className={styles.gridRow}>
               <div className={styles.cornerCell} aria-hidden />
               {groups.map((group) => {
                 const isExpanded =
-                  expandedGroups.has(group.id) && group.children.length > 0;
+                  expandedGroupIds.includes(group.id) && group.children.length > 0;
                 const span = isExpanded ? group.children.length : 1;
                 const canExpand = group.children.length > 0;
 
@@ -152,7 +152,7 @@ export function CoverageHeatmap({ objective, onSelectContent }: CoverageHeatmapP
             </div>
           )}
 
-          <div className={styles.headerRow}>
+          <div className={styles.gridRow}>
             <div className={styles.cornerCell}>
               <span className={styles.cornerLabel}>Sub-objective</span>
             </div>
@@ -164,7 +164,7 @@ export function CoverageHeatmap({ objective, onSelectContent }: CoverageHeatmapP
           </div>
 
           {rows.map(({ subObjective, cells }) => (
-            <div key={subObjective.id} className={styles.dataRow}>
+            <div key={subObjective.id} className={styles.gridRow}>
               <div className={styles.rowLabel} title={subObjective.title}>
                 {subObjective.title}
               </div>
@@ -173,7 +173,9 @@ export function CoverageHeatmap({ objective, onSelectContent }: CoverageHeatmapP
                 if (!column) return null;
 
                 const isSelected =
-                  selection?.item.id === cell.items[0]?.id &&
+                  selection !== null &&
+                  cell.items.length > 0 &&
+                  selection.item.id === cell.items[0].id &&
                   selection.subObjectiveTitle === subObjective.title &&
                   selection.columnLabel === column.label;
 
