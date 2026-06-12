@@ -232,6 +232,21 @@ export function IconPlus({ className }: IconProps) {
   );
 }
 
+export function IconWarningTriangle({ className }: IconProps) {
+  return (
+    <svg className={className} width="14" height="14" viewBox="0 0 14 14" aria-hidden>
+      <path
+        d="M7 1.8 13 12H1L7 1.8Z"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      <path d="M7 5.5v3M7 10.2v.4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function IconClipboardList({ className }: IconProps) {
   return (
     <svg className={className} width="20" height="20" viewBox="0 0 20 20" aria-hidden>

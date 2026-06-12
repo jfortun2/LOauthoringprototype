@@ -1,4 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
+import { ConfirmDialog } from "../../components/Dialog/ConfirmDialog";
+import { EditTitleDialog } from "../../components/Dialog/EditTitleDialog";
 import { CourseOutlinePanel } from "../../components/CourseOutlinePanel/CourseOutlinePanel";
 import { ObjectiveCard } from "../../components/ObjectiveCard/ObjectiveCard";
 import { Pagination } from "../../components/Pagination/Pagination";
@@ -10,7 +12,8 @@ import {
   IconSort,
 } from "../../components/icons/Icons";
 import { courseUnits } from "../../data/courseUnits";
-import { TOTAL_OBJECTIVES, objectives } from "../../data/objectives";
+import { objectives as initialObjectives } from "../../data/objectives";
+import type { LearningObjective } from "../../data/types";
 import { getContentById } from "../../utils/mappings";
 import styles from "./LearningObjectivesPage.module.css";
 
@@ -20,17 +23,45 @@ function matchesSearch(objective: { id: string; title: string }, search: string)
   return `${objective.id} ${objective.title}`.toLowerCase().includes(q);
 }
 
+type EditTarget = {
+  kind: "objective" | "subObjective";
+  objectiveId: string;
+  subObjectiveId?: string;
+  value: string;
+};
+
+type RemoveTarget = {
+  kind: "objective" | "subObjective";
+  objectiveId: string;
+  subObjectiveId?: string;
+  label: string;
+};
+
 export function LearningObjectivesPage() {
+  const [objectivesList, setObjectivesList] = useState<LearningObjective[]>(() => initialObjectives);
   const [search, setSearch] = useState("");
+  const [weakCoverageOnly, setWeakCoverageOnly] = useState(false);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
   const [highlightedObjectiveId, setHighlightedObjectiveId] = useState<string | null>(null);
   const [outlineOpen, setOutlineOpen] = useState(false);
+  const [editTarget, setEditTarget] = useState<EditTarget | null>(null);
+  const [removeTarget, setRemoveTarget] = useState<RemoveTarget | null>(null);
+
+  const weakCoverageCount = useMemo(
+    () => objectivesList.filter((o) => o.coverage === "weak" || o.coverage === "none").length,
+    [objectivesList],
+  );
 
   const filtered = useMemo(
-    () => objectives.filter((o) => matchesSearch(o, search)),
-    [search],
+    () =>
+      objectivesList.filter(
+        (o) =>
+          matchesSearch(o, search) &&
+          (!weakCoverageOnly || o.coverage === "weak" || o.coverage === "none"),
+      ),
+    [objectivesList, search, weakCoverageOnly],
   );
 
   const displayList = useMemo(() => {
@@ -55,7 +86,7 @@ export function LearningObjectivesPage() {
     const node = getContentById(contentId);
     if (!node) return;
     setOutlineOpen(true);
-    const linkedObjective = objectives.find(
+    const linkedObjective = objectivesList.find(
       (o) =>
         o.linkedPages.some((p) => p.id === contentId) ||
         o.linkedAssessments.some((a) => a.id === contentId),
@@ -65,6 +96,115 @@ export function LearningObjectivesPage() {
       if (unit) setSelectedUnitId(unit.id);
     }
   };
+
+  const openEditObjective = (objectiveId: string) => {
+    const objective = objectivesList.find((o) => o.id === objectiveId);
+    if (!objective) return;
+    setEditTarget({
+      kind: "objective",
+      objectiveId,
+      value: objective.title,
+    });
+  };
+
+  const openRemoveObjective = (objectiveId: string) => {
+    const objective = objectivesList.find((o) => o.id === objectiveId);
+    if (!objective) return;
+    setRemoveTarget({
+      kind: "objective",
+      objectiveId,
+      label: objective.title,
+    });
+  };
+
+  const openEditSubObjective = (objectiveId: string, subObjectiveId: string) => {
+    const objective = objectivesList.find((o) => o.id === objectiveId);
+    const subObjective = objective?.subObjectives.find((sub) => sub.id === subObjectiveId);
+    if (!subObjective) return;
+    setEditTarget({
+      kind: "subObjective",
+      objectiveId,
+      subObjectiveId,
+      value: subObjective.title,
+    });
+  };
+
+  const openRemoveSubObjective = (objectiveId: string, subObjectiveId: string) => {
+    const objective = objectivesList.find((o) => o.id === objectiveId);
+    const subObjective = objective?.subObjectives.find((sub) => sub.id === subObjectiveId);
+    if (!subObjective) return;
+    setRemoveTarget({
+      kind: "subObjective",
+      objectiveId,
+      subObjectiveId,
+      label: subObjective.title,
+    });
+  };
+
+  const handleSaveEdit = (value: string) => {
+    if (!editTarget) return;
+
+    if (editTarget.kind === "objective") {
+      setObjectivesList((current) =>
+        current.map((objective) =>
+          objective.id === editTarget.objectiveId ? { ...objective, title: value } : objective,
+        ),
+      );
+    } else if (editTarget.subObjectiveId) {
+      setObjectivesList((current) =>
+        current.map((objective) => {
+          if (objective.id !== editTarget.objectiveId) return objective;
+          return {
+            ...objective,
+            subObjectives: objective.subObjectives.map((sub) =>
+              sub.id === editTarget.subObjectiveId ? { ...sub, title: value } : sub,
+            ),
+          };
+        }),
+      );
+    }
+
+    setEditTarget(null);
+  };
+
+  const handleConfirmRemove = () => {
+    if (!removeTarget) return;
+
+    if (removeTarget.kind === "objective") {
+      setObjectivesList((current) =>
+        current.filter((objective) => objective.id !== removeTarget.objectiveId),
+      );
+      if (expandedId === removeTarget.objectiveId) setExpandedId(null);
+      if (highlightedObjectiveId === removeTarget.objectiveId) setHighlightedObjectiveId(null);
+    } else if (removeTarget.subObjectiveId) {
+      setObjectivesList((current) =>
+        current.map((objective) => {
+          if (objective.id !== removeTarget.objectiveId) return objective;
+          const subObjectives = objective.subObjectives.filter(
+            (sub) => sub.id !== removeTarget.subObjectiveId,
+          );
+          return {
+            ...objective,
+            subObjectives,
+            tagCounts: objective.tagCounts
+              ? { ...objective.tagCounts, subObjectives: subObjectives.length }
+              : objective.tagCounts,
+          };
+        }),
+      );
+    }
+
+    setRemoveTarget(null);
+  };
+
+  const editDialogTitle =
+    editTarget?.kind === "objective" ? "Edit learning objective" : "Edit sub-objective";
+  const editDialogLabel =
+    editTarget?.kind === "objective" ? "Objective title" : "Sub-objective title";
+  const removeDialogTitle =
+    removeTarget?.kind === "objective"
+      ? "Remove learning objective?"
+      : "Remove sub-objective?";
 
   return (
     <div className={styles.page}>
@@ -108,6 +248,16 @@ export function LearningObjectivesPage() {
             <button type="button" className={styles.sortBtn} aria-label="Sort">
               <IconSort />
             </button>
+            <button
+              type="button"
+              className={`${styles.filterPill} ${weakCoverageOnly ? styles.filterPillActive : ""}`}
+              onClick={() => setWeakCoverageOnly((current) => !current)}
+              aria-pressed={weakCoverageOnly}
+            >
+              <span className={styles.filterPillDot} aria-hidden />
+              Weak coverage
+              <span className={styles.filterPillCount}>{weakCoverageCount}</span>
+            </button>
           </div>
           <button type="button" className={styles.btnNew}>
             <IconPlus />
@@ -117,9 +267,15 @@ export function LearningObjectivesPage() {
 
         <div className={styles.listToolbar}>
           <p className={styles.resultCount}>
-            Showing result 1 - 20 of {TOTAL_OBJECTIVES} total
+            Showing result 1 - {Math.min(20, displayList.length)} of {objectivesList.length} total
           </p>
-          <Pagination page={page} pageSize={20} total={TOTAL_OBJECTIVES} onPageChange={setPage} compact />
+          <Pagination
+            page={page}
+            pageSize={20}
+            total={objectivesList.length}
+            onPageChange={setPage}
+            compact
+          />
         </div>
 
         <div className={styles.contentShell}>
@@ -150,9 +306,11 @@ export function LearningObjectivesPage() {
                     <p className={styles.emptyText}>
                       {selectedUnitId
                         ? "No objectives are linked to this unit yet."
-                        : search.trim()
-                          ? "Try a different search term."
-                          : "No objectives match your filters."}
+                        : weakCoverageOnly
+                          ? "No objectives with weak or missing coverage. Nice work!"
+                          : search.trim()
+                            ? "Try a different search term."
+                            : "No objectives match your filters."}
                     </p>
                   </div>
                 ) : (
@@ -165,6 +323,10 @@ export function LearningObjectivesPage() {
                           highlighted={highlightedObjectiveId === objective.id}
                           onToggle={() => toggleExpanded(objective.id)}
                           onSelectContent={handleSelectContent}
+                          onEditObjective={openEditObjective}
+                          onRemoveObjective={openRemoveObjective}
+                          onEditSubObjective={openEditSubObjective}
+                          onRemoveSubObjective={openRemoveSubObjective}
                         />
                       </li>
                     ))}
@@ -175,6 +337,27 @@ export function LearningObjectivesPage() {
           </div>
         </div>
       </div>
+
+      <EditTitleDialog
+        open={editTarget !== null}
+        title={editDialogTitle}
+        label={editDialogLabel}
+        initialValue={editTarget?.value ?? ""}
+        onSave={handleSaveEdit}
+        onCancel={() => setEditTarget(null)}
+      />
+
+      <ConfirmDialog
+        open={removeTarget !== null}
+        title={removeDialogTitle}
+        message={
+          removeTarget
+            ? `“${removeTarget.label}” will be removed from this prototype session. This cannot be undone.`
+            : ""
+        }
+        onConfirm={handleConfirmRemove}
+        onCancel={() => setRemoveTarget(null)}
+      />
     </div>
   );
 }

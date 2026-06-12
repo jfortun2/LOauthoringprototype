@@ -6,23 +6,130 @@
   box-shadow: var(--shadow-sm);
 }
 
+.guide {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: var(--color-bg-subtle);
+}
+
+.guideIntro {
+  margin-bottom: 12px;
+}
+
+.guideLead {
+  margin: 0 0 6px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--color-text-primary);
+}
+
+.guideLead strong {
+  color: var(--color-text-button);
+}
+
+.structureSummary {
+  margin: 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--color-text-muted);
+}
+
+.guideCards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.guideCard {
+  padding: 10px 12px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
+}
+
+.guideCardLabel {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
+}
+
+.guideCardText {
+  margin: 0;
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--color-text-muted);
+}
+
 .toolbar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 10px 16px;
+  gap: 12px 16px;
   padding: 10px 14px;
   border-bottom: 1px solid var(--color-border-subtle);
-  background: var(--color-bg-subtle);
+  background: var(--color-bg-card);
 }
 
-.hint {
-  margin: 0;
+.toolbarLeft {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.insights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.insightItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.insightDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.insightDotGap {
+  background: #f3f4f8;
+}
+
+.insightDotLinked {
+  background: #0073e5;
+}
+
+.expandControls {
+  display: flex;
+  gap: 8px;
+}
+
+.controlBtn {
+  padding: 5px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
   font-size: 12px;
-  line-height: 16px;
-  color: var(--color-text-muted);
-  max-width: 420px;
+  font-weight: 600;
+  color: var(--color-text-button);
+}
+
+.controlBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .legend {
@@ -37,6 +144,7 @@
   gap: 6px;
   font-size: 11px;
   color: var(--color-text-secondary);
+  cursor: help;
 }
 
 .legendSwatch {
@@ -46,9 +154,19 @@
   border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
+.expandCallout {
+  margin: 0;
+  padding: 8px 14px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-text-secondary);
+  background: var(--color-accent-blue);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
 .scrollArea {
   overflow: auto;
-  max-height: 420px;
+  max-height: 440px;
 }
 
 .grid {
@@ -59,7 +177,7 @@
 
 .gridRow {
   display: grid;
-  grid-template-columns: minmax(140px, 180px) repeat(var(--column-count, 4), 36px);
+  grid-template-columns: minmax(160px, 200px) repeat(var(--column-count, 4), 44px);
 }
 
 .cornerCell {
@@ -71,48 +189,11 @@
   border-bottom: 1px solid var(--color-border-subtle);
 }
 
-.groupCell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  min-height: 32px;
-  padding: 4px 6px;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--color-text-secondary);
-  background: var(--color-bg-subtle);
-  border-right: 1px solid var(--color-border-subtle);
-  border-bottom: 1px solid var(--color-border-subtle);
-}
-
-.expandBtn {
-  flex-shrink: 0;
-  width: 18px;
-  height: 18px;
-  border: 1px solid var(--color-border);
-  border-radius: 3px;
-  background: var(--color-bg-card);
-  color: var(--color-text-secondary);
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.expandBtn:hover {
-  background: var(--color-bg-subtle);
-}
-
-.groupLabel {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .cornerLabel {
   display: flex;
   align-items: flex-end;
   height: 100%;
+  min-height: 88px;
   padding: 8px 10px;
   font-size: 11px;
   font-weight: 700;
@@ -123,25 +204,69 @@
 
 .columnHead {
   position: relative;
-  height: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+  min-height: 88px;
+  padding: 6px 4px 8px;
   border-right: 1px solid var(--color-border-subtle);
   border-bottom: 1px solid var(--color-border-subtle);
   background: var(--color-bg-subtle);
 }
 
-.columnHeadText {
+.expandBtn {
   position: absolute;
-  bottom: 8px;
+  top: 6px;
   left: 50%;
-  transform: translateX(-20%) rotate(-45deg);
-  transform-origin: left bottom;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  background: var(--color-bg-card);
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  z-index: 1;
+}
+
+.expandBtn:hover {
+  background: var(--color-bg-subtle);
+  color: var(--color-text-button);
+}
+
+.levelBadge {
+  margin-top: 18px;
+  padding: 1px 5px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-muted);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-text-muted);
+}
+
+.columnHeadText {
+  transform: rotate(-45deg);
+  transform-origin: center bottom;
   white-space: nowrap;
   font-size: 11px;
   font-weight: 600;
   color: var(--color-text-secondary);
-  max-width: 96px;
+  max-width: 72px;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.childHint {
+  font-size: 9px;
+  line-height: 1;
+  color: var(--color-text-muted);
 }
 
 .rowLabel {
@@ -151,7 +276,7 @@
   display: flex;
   align-items: center;
   padding: 8px 10px;
-  min-height: 40px;
+  min-height: 44px;
   font-size: 13px;
   font-weight: 600;
   line-height: 18px;
@@ -165,25 +290,52 @@
 }
 
 .cell {
-  width: 36px;
-  height: 40px;
+  position: relative;
+  width: 44px;
+  height: 44px;
   margin: 0;
-  padding: 6px;
+  padding: 8px;
   border: none;
   border-right: 1px solid var(--color-border-subtle);
   border-bottom: 1px solid var(--color-border-subtle);
-  border-radius: 5px;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+  border-radius: 6px;
   transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .cell:hover {
-  transform: scale(1.08);
+  transform: scale(1.06);
   z-index: 1;
+}
+
+.cellGap {
+  background-color: #f3f4f8;
+  box-shadow: inset 0 0 0 1px #d8dbe3;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 4px,
+    rgba(206, 209, 217, 0.35) 4px,
+    rgba(206, 209, 217, 0.35) 5px
+  );
 }
 
 .cellSelected {
   box-shadow: var(--focus-ring), inset 0 0 0 1px var(--color-border-bold);
+}
+
+.cellBadge {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  min-width: 14px;
+  height: 14px;
+  padding: 0 3px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.92);
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 14px;
+  color: var(--color-text-secondary);
 }
 
 .intensity0 {
@@ -206,6 +358,63 @@
   background-color: #0073e5;
 }
 
+.intensity3 .cellBadge,
+.intensity4 .cellBadge {
+  color: var(--color-text-primary);
+}
+
+.gapPanel {
+  padding: 14px 16px;
+  border-top: 1px solid var(--color-border-subtle);
+  background: var(--color-status-warning-bg);
+}
+
+.gapPanelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.gapPanelTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-status-warning);
+}
+
+.gapCloseBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  font-size: 18px;
+  line-height: 1;
+  color: var(--color-text-muted);
+}
+
+.gapContext {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.gapText {
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--color-text-primary);
+}
+
+.gapActions {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--color-text-secondary);
+}
+
 .detailWrap {
   padding: 0 14px 14px;
   border-top: 1px solid var(--color-border-subtle);
@@ -216,4 +425,10 @@
   text-align: center;
   color: var(--color-text-muted);
   font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .guideCards {
+    grid-template-columns: 1fr;
+  }
 }

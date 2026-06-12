@@ -55,7 +55,13 @@ export type LearningObjectiveDraft = Omit<LearningObjective, "subObjectives"> & 
   subObjectives: SubObjectiveDraft[];
 };
 
-export type ContentNodeType = "sequence" | "unit" | "module" | "page" | "activity";
+export type ContentNodeType =
+  | "sequence"
+  | "unit"
+  | "module"
+  | "section"
+  | "page"
+  | "activity";
 
 export type ContentNode = {
   id: string;

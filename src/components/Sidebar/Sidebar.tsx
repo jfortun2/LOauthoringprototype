@@ -1,3 +1,4 @@
+import { useAppNavigation } from "../../context/AppNavigationContext";
 import { useLayout } from "../../context/LayoutContext";
 import { COURSE_TITLE_SHORT } from "../../data/courseUnits";
 import { IconChevronLeft } from "../icons/Icons";
@@ -36,6 +37,7 @@ function NavIconGraduate() {
 }
 
 export function Sidebar() {
+  const { page, setPage } = useAppNavigation();
   const { workspaceCollapsed, toggleWorkspace } = useLayout();
 
   return (
@@ -107,7 +109,11 @@ export function Sidebar() {
               </span>
             </button>
             <div className={styles.submenu}>
-              <button type="button" className={`${styles.submenuItem} ${styles.submenuItemActive}`}>
+              <button
+                type="button"
+                className={`${styles.submenuItem} ${page === "objectives" ? styles.submenuItemActive : ""}`}
+                onClick={() => setPage("objectives")}
+              >
                 Objectives
               </button>
               <button type="button" className={styles.submenuItem}>
@@ -119,7 +125,11 @@ export function Sidebar() {
               <button type="button" className={styles.submenuItem}>
                 Bibliography
               </button>
-              <button type="button" className={styles.submenuItem}>
+              <button
+                type="button"
+                className={`${styles.submenuItem} ${page === "curriculum" ? styles.submenuItemActive : ""}`}
+                onClick={() => setPage("curriculum")}
+              >
                 Curriculum
               </button>
               <button type="button" className={styles.submenuItem}>

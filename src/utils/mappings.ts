@@ -55,6 +55,24 @@ export function hasCoverageGap(objective: LearningObjective): boolean {
   return objective.linkedPages.length === 0 || objective.linkedAssessments.length === 0;
 }
 
+/** Minimum recommended activities per sub-objective */
+export const MIN_FORMATIVE_ACTIVITIES = 3;
+export const MIN_SUMMATIVE_ACTIVITIES = 3;
+
+export function subObjectiveNeedsActivities(sub: {
+  formativeCount: number;
+  summativeCount: number;
+}): boolean {
+  return (
+    sub.formativeCount < MIN_FORMATIVE_ACTIVITIES ||
+    sub.summativeCount < MIN_SUMMATIVE_ACTIVITIES
+  );
+}
+
+export function countUnderAssessedSubObjectives(objective: LearningObjective): number {
+  return objective.subObjectives.filter(subObjectiveNeedsActivities).length;
+}
+
 export function coverageLabel(strength: LearningObjective["coverage"]): string {
   switch (strength) {
     case "strong":

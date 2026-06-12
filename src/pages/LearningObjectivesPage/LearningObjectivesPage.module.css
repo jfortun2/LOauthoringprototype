@@ -112,6 +112,61 @@
   color: var(--color-text-muted);
 }
 
+.filterPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 35px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-card);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.filterPill:hover {
+  border-color: var(--color-status-warning);
+  color: var(--color-text-primary);
+}
+
+.filterPillActive,
+.filterPillActive:hover {
+  border-color: var(--color-status-warning);
+  background: var(--color-status-warning-bg);
+  color: var(--color-status-warning);
+  font-weight: 600;
+}
+
+.filterPillDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-status-warning);
+  flex-shrink: 0;
+}
+
+.filterPillCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  background: var(--color-status-warning-bg);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-status-warning);
+}
+
+.filterPillActive .filterPillCount {
+  background: var(--color-status-warning);
+  color: #fff;
+}
+
 .btnNew {
   display: inline-flex;
   align-items: center;

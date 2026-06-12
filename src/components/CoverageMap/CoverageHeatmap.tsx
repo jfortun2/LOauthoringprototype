@@ -2,13 +2,18 @@ import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import { courseContentTree } from "../../data/courseContent";
 import type { LearningObjective } from "../../data/types";
 import {
+  collectExpandableNodeIds,
+  getContentPathLabel,
+} from "../../utils/coverageColumns";
+import {
   buildObjectiveCoverageMap,
+  computeCoverageInsights,
+  intensityDescription,
   intensityLabel,
   type ContentDetailSelection,
   type CoverageContentItem,
   type CoverageIntensity,
 } from "../../utils/coverageMap";
-import { getContentPathLabel } from "../../utils/coverageColumns";
 import { ContentDetailPanel } from "./ContentDetailPanel";
 import styles from "./CoverageHeatmap.module.css";
 
@@ -17,8 +22,14 @@ type CoverageHeatmapProps = {
   onSelectContent?: (contentId: string) => void;
 };
 
+type GapSelection = {
+  subObjectiveTitle: string;
+  columnLabel: string;
+  levelLabel: string;
+};
+
 const LEGEND: { intensity: CoverageIntensity; label: string }[] = [
-  { intensity: 0, label: "None" },
+  { intensity: 0, label: "Gap" },
   { intensity: 1, label: "Minimal" },
   { intensity: 2, label: "Light" },
   { intensity: 3, label: "Moderate" },
@@ -40,6 +51,7 @@ function intensityClass(intensity: CoverageIntensity) {
 export function CoverageHeatmap({ objective, onSelectContent }: CoverageHeatmapProps) {
   const [expandedGroupIds, setExpandedGroupIds] = useState<string[]>([]);
   const [selection, setSelection] = useState<ContentDetailSelection | null>(null);
+  const [gapSelection, setGapSelection] = useState<GapSelection | null>(null);
   const [cellItems, setCellItems] = useState<CoverageContentItem[]>([]);
 
   const expandedGroupSet = useMemo(() => new Set(expandedGroupIds), [expandedGroupIds]);
@@ -48,14 +60,18 @@ export function CoverageHeatmap({ objective, onSelectContent }: CoverageHeatmapP
     () => buildObjectiveCoverageMap(objective, expandedGroupSet),
     [objective, expandedGroupIds],
   );
-  const { groups, columns, rows } = coverageMap;
+  const { groups, columns, rows, structure } = coverageMap;
 
-  const hasExpandableGroups = groups.some((group) => group.children.length > 0);
+  const expandableIds = useMemo(() => collectExpandableNodeIds(groups), [groups]);
+  const insights = useMemo(() => computeCoverageInsights(rows), [rows]);
   const columnCount = Math.max(columns.length, 1);
+  const canExpand = expandableIds.length > 0;
+  const isFullyExpanded = canExpand && expandableIds.every((id) => expandedGroupIds.includes(id));
 
   useEffect(() => {
     setExpandedGroupIds([]);
     setSelection(null);
+    setGapSelection(null);
     setCellItems([]);
   }, [objective.id]);
 
@@ -70,6 +86,7 @@ export function CoverageHeatmap({ objective, onSelectContent }: CoverageHeatmapP
         ? getContentPathLabel(item.id, courseContentTree)
         : `${columnLabel} · Linked activity`;
 
+    setGapSelection(null);
     setCellItems(items);
     setSelection({
       item,
@@ -83,11 +100,26 @@ export function CoverageHeatmap({ objective, onSelectContent }: CoverageHeatmapP
     }
   };
 
-  const toggleGroup = (groupId: string) => {
+  const toggleColumn = (columnId: string) => {
     setExpandedGroupIds((prev) =>
-      prev.includes(groupId) ? prev.filter((id) => id !== groupId) : [...prev, groupId],
+      prev.includes(columnId) ? prev.filter((id) => id !== columnId) : [...prev, columnId],
     );
     setSelection(null);
+    setGapSelection(null);
+    setCellItems([]);
+  };
+
+  const expandAll = () => {
+    setExpandedGroupIds(expandableIds);
+    setSelection(null);
+    setGapSelection(null);
+    setCellItems([]);
+  };
+
+  const collapseAll = () => {
+    setExpandedGroupIds([]);
+    setSelection(null);
+    setGapSelection(null);
     setCellItems([]);
   };
 
@@ -101,13 +133,82 @@ export function CoverageHeatmap({ objective, onSelectContent }: CoverageHeatmapP
 
   return (
     <div className={styles.mapWrap}>
+      <div className={styles.guide}>
+        <div className={styles.guideIntro}>
+          <p className={styles.guideLead}>
+            See where each sub-objective is taught across your course. Rows are sub-objectives;
+            columns follow your course structure starting at{" "}
+            <strong>{structure.topLevelLabel.toLowerCase()}</strong>.
+          </p>
+          <p className={styles.structureSummary}>{structure.summary}</p>
+        </div>
+
+        <div className={styles.guideCards}>
+          <div className={styles.guideCard}>
+            <span className={styles.guideCardLabel}>Read the squares</span>
+            <p className={styles.guideCardText}>
+              Darker blue = stronger coverage. Gray squares are gaps — no linked pages or
+              activities for that sub-objective in that part of the course.
+            </p>
+          </div>
+          <div className={styles.guideCard}>
+            <span className={styles.guideCardLabel}>Drill down</span>
+            <p className={styles.guideCardText}>
+              {structure.expandHint}
+              {structure.drillDownLabels.length > 0 && (
+                <>
+                  {" "}
+                  Path: {structure.drillDownLabels.join(" · ")}.
+                </>
+              )}
+            </p>
+          </div>
+          <div className={styles.guideCard}>
+            <span className={styles.guideCardLabel}>Take action</span>
+            <p className={styles.guideCardText}>
+              Click a colored square to see linked content. Click a gray gap to plan where to add
+              pages or assessments. Use gaps to balance coverage before publishing.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className={styles.toolbar}>
-        <p className={styles.hint}>
-          Rows are sub-objectives; columns are course structure. Expand a unit to see modules.
-        </p>
-        <div className={styles.legend}>
+        <div className={styles.toolbarLeft}>
+          <div className={styles.insights}>
+            <span className={styles.insightItem}>
+              <span className={`${styles.insightDot} ${styles.insightDotGap}`} />
+              {insights.gapCount} gaps
+            </span>
+            <span className={styles.insightItem}>
+              <span className={`${styles.insightDot} ${styles.insightDotLinked}`} />
+              {insights.linkedCellCount} linked
+            </span>
+          </div>
+          {canExpand && (
+            <div className={styles.expandControls}>
+              <button type="button" className={styles.controlBtn} onClick={expandAll}>
+                Expand all
+              </button>
+              <button
+                type="button"
+                className={styles.controlBtn}
+                onClick={collapseAll}
+                disabled={expandedGroupIds.length === 0}
+              >
+                Collapse to overview
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className={styles.legend} aria-label="Coverage intensity legend">
           {LEGEND.map(({ intensity, label }) => (
-            <span key={intensity} className={styles.legendItem}>
+            <span
+              key={intensity}
+              className={styles.legendItem}
+              title={intensityDescription(intensity)}
+            >
               <span className={`${styles.legendSwatch} ${intensityClass(intensity)}`} />
               {label}
             </span>
@@ -115,52 +216,47 @@ export function CoverageHeatmap({ objective, onSelectContent }: CoverageHeatmapP
         </div>
       </div>
 
+      {canExpand && !isFullyExpanded && (
+        <p className={styles.expandCallout}>
+          Tip: click <strong>+</strong> on a column header to open{" "}
+          {structure.kind === "units"
+            ? "modules, sections, or pages"
+            : structure.kind === "page-groups"
+              ? "individual pages"
+              : "the next level down"}
+          .
+        </p>
+      )}
+
       <div className={styles.scrollArea}>
         <div className={styles.grid} style={gridStyle}>
-          {hasExpandableGroups && (
-            <div className={styles.gridRow}>
-              <div className={styles.cornerCell} aria-hidden />
-              {groups.map((group) => {
-                const isExpanded =
-                  expandedGroupIds.includes(group.id) && group.children.length > 0;
-                const span = isExpanded ? group.children.length : 1;
-                const canExpand = group.children.length > 0;
-
-                return (
-                  <div
-                    key={group.id}
-                    className={styles.groupCell}
-                    style={{ gridColumn: `span ${span}` }}
-                  >
-                    {canExpand && (
-                      <button
-                        type="button"
-                        className={styles.expandBtn}
-                        onClick={() => toggleGroup(group.id)}
-                        aria-expanded={isExpanded}
-                        aria-label={`${isExpanded ? "Collapse" : "Expand"} ${group.label}`}
-                      >
-                        {isExpanded ? "−" : "+"}
-                      </button>
-                    )}
-                    <span className={styles.groupLabel} title={group.label}>
-                      {group.shortLabel}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-
           <div className={styles.gridRow}>
             <div className={styles.cornerCell}>
               <span className={styles.cornerLabel}>Sub-objective</span>
             </div>
-            {columns.map((column) => (
-              <div key={column.id} className={styles.columnHead} title={column.label}>
-                <span className={styles.columnHeadText}>{column.shortLabel}</span>
-              </div>
-            ))}
+            {columns.map((column) => {
+              const isExpanded = expandedGroupIds.includes(column.id);
+              return (
+                <div key={column.id} className={styles.columnHead} title={column.label}>
+                  {column.hasChildren && (
+                    <button
+                      type="button"
+                      className={styles.expandBtn}
+                      onClick={() => toggleColumn(column.id)}
+                      aria-expanded={isExpanded}
+                      aria-label={`${isExpanded ? "Collapse" : "Expand"} ${column.label}`}
+                    >
+                      {isExpanded ? "−" : "+"}
+                    </button>
+                  )}
+                  <span className={styles.levelBadge}>{column.levelLabel}</span>
+                  <span className={styles.columnHeadText}>{column.shortLabel}</span>
+                  {column.hasChildren && !isExpanded && (
+                    <span className={styles.childHint}>{column.childCount} inside</span>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {rows.map(({ subObjective, cells }) => (
@@ -172,21 +268,28 @@ export function CoverageHeatmap({ objective, onSelectContent }: CoverageHeatmapP
                 const column = columns.find((c) => c.id === cell.columnId);
                 if (!column) return null;
 
+                const isGap = cell.intensity === 0;
                 const isSelected =
+                  !isGap &&
                   selection !== null &&
                   cell.items.length > 0 &&
                   selection.item.id === cell.items[0].id &&
                   selection.subObjectiveTitle === subObjective.title &&
                   selection.columnLabel === column.label;
+                const isGapSelected =
+                  isGap &&
+                  gapSelection !== null &&
+                  gapSelection.subObjectiveTitle === subObjective.title &&
+                  gapSelection.columnLabel === column.label;
 
                 return (
                   <button
                     key={cell.columnId}
                     type="button"
                     className={`${styles.cell} ${intensityClass(cell.intensity)} ${
-                      isSelected ? styles.cellSelected : ""
-                    }`}
-                    title={`${column.label}: ${intensityLabel(cell.intensity)}${
+                      isGap ? styles.cellGap : ""
+                    } ${isSelected || isGapSelected ? styles.cellSelected : ""}`}
+                    title={`${column.label}: ${intensityLabel(cell.intensity)} — ${intensityDescription(cell.intensity)}${
                       cell.items.length ? ` · ${cell.items.length} linked` : ""
                     }`}
                     onClick={() => {
@@ -200,16 +303,54 @@ export function CoverageHeatmap({ objective, onSelectContent }: CoverageHeatmapP
                       } else {
                         setSelection(null);
                         setCellItems([]);
+                        setGapSelection({
+                          subObjectiveTitle: subObjective.title,
+                          columnLabel: column.label,
+                          levelLabel: column.levelLabel,
+                        });
                       }
                     }}
                     aria-label={`${column.label}, ${intensityLabel(cell.intensity)} coverage`}
-                  />
+                  >
+                    {!isGap && cell.items.length > 0 && (
+                      <span className={styles.cellBadge}>{cell.items.length}</span>
+                    )}
+                  </button>
                 );
               })}
             </div>
           ))}
         </div>
       </div>
+
+      {gapSelection && (
+        <div className={styles.gapPanel}>
+          <div className={styles.gapPanelHeader}>
+            <h5 className={styles.gapPanelTitle}>Coverage gap</h5>
+            <button
+              type="button"
+              className={styles.gapCloseBtn}
+              onClick={() => setGapSelection(null)}
+              aria-label="Close gap details"
+            >
+              ×
+            </button>
+          </div>
+          <p className={styles.gapContext}>
+            {gapSelection.subObjectiveTitle} · {gapSelection.columnLabel}
+          </p>
+          <p className={styles.gapText}>
+            No pages or activities in this {gapSelection.levelLabel.toLowerCase()} are linked to
+            this sub-objective yet. Consider adding a reading, practice activity, or assessment here
+            so learners encounter this objective in context.
+          </p>
+          <ul className={styles.gapActions}>
+            <li>Add a formative activity to introduce the concept</li>
+            <li>Link an existing page that teaches this sub-objective</li>
+            <li>Review neighboring columns for overlap before creating new content</li>
+          </ul>
+        </div>
+      )}
 
       {selection && (
         <div className={styles.detailWrap}>
