@@ -3,10 +3,8 @@ import { ConfirmDialog } from "../../components/Dialog/ConfirmDialog";
 import { EditTitleDialog } from "../../components/Dialog/EditTitleDialog";
 import { CourseOutlinePanel } from "../../components/CourseOutlinePanel/CourseOutlinePanel";
 import { ObjectiveCard } from "../../components/ObjectiveCard/ObjectiveCard";
-import { Pagination } from "../../components/Pagination/Pagination";
 import {
   IconChevronDown,
-  IconExternalLink,
   IconPlus,
   IconSearch,
   IconSort,
@@ -14,6 +12,9 @@ import {
 import { courseUnits } from "../../data/courseUnits";
 import { objectives as initialObjectives } from "../../data/objectives";
 import type { LearningObjective } from "../../data/types";
+import type { ProductModel } from "../../utils/objectiveMappingViews";
+import { hasMissingActivities } from "../../utils/objectiveMappingViews";
+import { ProductModelToggle } from "../../components/ObjectiveMapping/ProductModelToggle";
 import { getContentById } from "../../utils/mappings";
 import styles from "./LearningObjectivesPage.module.css";
 
@@ -40,17 +41,18 @@ type RemoveTarget = {
 export function LearningObjectivesPage() {
   const [objectivesList, setObjectivesList] = useState<LearningObjective[]>(() => initialObjectives);
   const [search, setSearch] = useState("");
-  const [weakCoverageOnly, setWeakCoverageOnly] = useState(false);
+  const [missingActivitiesOnly, setMissingActivitiesOnly] = useState(false);
+  const [productModel, setProductModel] = useState<ProductModel>("strict");
+  const [selectedSubByObjective, setSelectedSubByObjective] = useState<Record<string, string | null>>({});
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
   const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
   const [highlightedObjectiveId, setHighlightedObjectiveId] = useState<string | null>(null);
   const [outlineOpen, setOutlineOpen] = useState(false);
   const [editTarget, setEditTarget] = useState<EditTarget | null>(null);
   const [removeTarget, setRemoveTarget] = useState<RemoveTarget | null>(null);
 
-  const weakCoverageCount = useMemo(
-    () => objectivesList.filter((o) => o.coverage === "weak" || o.coverage === "none").length,
+  const missingActivitiesCount = useMemo(
+    () => objectivesList.filter(hasMissingActivities).length,
     [objectivesList],
   );
 
@@ -59,9 +61,9 @@ export function LearningObjectivesPage() {
       objectivesList.filter(
         (o) =>
           matchesSearch(o, search) &&
-          (!weakCoverageOnly || o.coverage === "weak" || o.coverage === "none"),
+          (!missingActivitiesOnly || hasMissingActivities(o)),
       ),
-    [objectivesList, search, weakCoverageOnly],
+    [objectivesList, search, missingActivitiesOnly],
   );
 
   const displayList = useMemo(() => {
@@ -75,6 +77,9 @@ export function LearningObjectivesPage() {
   const toggleExpanded = (id: string) => {
     setExpandedId((current) => (current === id ? null : id));
     setHighlightedObjectiveId(id);
+    if (expandedId === id) {
+      setSelectedSubByObjective((current) => ({ ...current, [id]: null }));
+    }
   };
 
   const handleSelectUnit = useCallback((unitId: string) => {
@@ -114,30 +119,6 @@ export function LearningObjectivesPage() {
       kind: "objective",
       objectiveId,
       label: objective.title,
-    });
-  };
-
-  const openEditSubObjective = (objectiveId: string, subObjectiveId: string) => {
-    const objective = objectivesList.find((o) => o.id === objectiveId);
-    const subObjective = objective?.subObjectives.find((sub) => sub.id === subObjectiveId);
-    if (!subObjective) return;
-    setEditTarget({
-      kind: "subObjective",
-      objectiveId,
-      subObjectiveId,
-      value: subObjective.title,
-    });
-  };
-
-  const openRemoveSubObjective = (objectiveId: string, subObjectiveId: string) => {
-    const objective = objectivesList.find((o) => o.id === objectiveId);
-    const subObjective = objective?.subObjectives.find((sub) => sub.id === subObjectiveId);
-    if (!subObjective) return;
-    setRemoveTarget({
-      kind: "subObjective",
-      objectiveId,
-      subObjectiveId,
-      label: subObjective.title,
     });
   };
 
@@ -212,21 +193,18 @@ export function LearningObjectivesPage() {
         <header className={styles.pageHeader}>
           <h1 className={styles.heading}>Learning Objectives</h1>
           <p className={styles.lead}>
-            Learning objectives help you to organize course content and determine appropriate
-            assessments and instructional strategies. Refer to the{" "}
-            <a
-              href="https://www.cmu.edu/teaching/designteach/design/learningobjectives.html"
-              className={styles.helpLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              CMU Eberly Center guide on learning objectives
-              <IconExternalLink />
-            </a>{" "}
-            to learn more about the importance of attaching learning objectives to pages and
-            activities.
+            Compare two mapping models for learning objectives and sub-objectives. Expand an
+            objective to see how pages and activities link in each version.
           </p>
         </header>
+
+        <ProductModelToggle
+          value={productModel}
+          onChange={(model) => {
+            setProductModel(model);
+            setSelectedSubByObjective({});
+          }}
+        />
 
         <div className={styles.toolbar}>
           <div className={styles.toolbarLeft}>
@@ -250,13 +228,13 @@ export function LearningObjectivesPage() {
             </button>
             <button
               type="button"
-              className={`${styles.filterPill} ${weakCoverageOnly ? styles.filterPillActive : ""}`}
-              onClick={() => setWeakCoverageOnly((current) => !current)}
-              aria-pressed={weakCoverageOnly}
+              className={`${styles.filterPill} ${missingActivitiesOnly ? styles.filterPillActive : ""}`}
+              onClick={() => setMissingActivitiesOnly((current) => !current)}
+              aria-pressed={missingActivitiesOnly}
             >
               <span className={styles.filterPillDot} aria-hidden />
-              Weak coverage
-              <span className={styles.filterPillCount}>{weakCoverageCount}</span>
+              Missing activities
+              <span className={styles.filterPillCount}>{missingActivitiesCount}</span>
             </button>
           </div>
           <button type="button" className={styles.btnNew}>
@@ -267,15 +245,8 @@ export function LearningObjectivesPage() {
 
         <div className={styles.listToolbar}>
           <p className={styles.resultCount}>
-            Showing result 1 - {Math.min(20, displayList.length)} of {objectivesList.length} total
+            {displayList.length} objective{displayList.length === 1 ? "" : "s"}
           </p>
-          <Pagination
-            page={page}
-            pageSize={20}
-            total={objectivesList.length}
-            onPageChange={setPage}
-            compact
-          />
         </div>
 
         <div className={styles.contentShell}>
@@ -306,8 +277,8 @@ export function LearningObjectivesPage() {
                     <p className={styles.emptyText}>
                       {selectedUnitId
                         ? "No objectives are linked to this unit yet."
-                        : weakCoverageOnly
-                          ? "No objectives with weak or missing coverage. Nice work!"
+                        : missingActivitiesOnly
+                          ? "No objectives with missing activity links."
                           : search.trim()
                             ? "Try a different search term."
                             : "No objectives match your filters."}
@@ -319,14 +290,20 @@ export function LearningObjectivesPage() {
                       <li key={objective.id}>
                         <ObjectiveCard
                           objective={objective}
+                          productModel={productModel}
                           expanded={expandedId === objective.id}
                           highlighted={highlightedObjectiveId === objective.id}
+                          selectedSubId={selectedSubByObjective[objective.id] ?? null}
                           onToggle={() => toggleExpanded(objective.id)}
+                          onSelectSub={(subId) =>
+                            setSelectedSubByObjective((current) => ({
+                              ...current,
+                              [objective.id]: subId,
+                            }))
+                          }
                           onSelectContent={handleSelectContent}
                           onEditObjective={openEditObjective}
                           onRemoveObjective={openRemoveObjective}
-                          onEditSubObjective={openEditSubObjective}
-                          onRemoveSubObjective={openRemoveSubObjective}
                         />
                       </li>
                     ))}

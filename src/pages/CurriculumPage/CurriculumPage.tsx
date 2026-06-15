@@ -1,16 +1,20 @@
 import { useEffect, useMemo, useState } from "react";
+import { CurriculumCoverageMeter } from "../../components/CurriculumCoverage/CurriculumCoverageMeter";
+import { CurriculumMiniHeatmap } from "../../components/CurriculumCoverage/CurriculumMiniHeatmap";
+import {
+  CurriculumModuleInsights,
+  CurriculumObjectiveView,
+} from "../../components/CurriculumCoverage/CurriculumModuleInsights";
 import { RowExpandChevron } from "../../components/RowExpandChevron/RowExpandChevron";
 import { IconChevronRight } from "../../components/icons/Icons";
 import { courseUnits } from "../../data/courseUnits";
 import {
   getCurriculumForUnit,
-  getObjectivesForCurriculumModule,
   type CurriculumNode,
   type CurriculumView,
 } from "../../data/curriculum";
 import { objectives } from "../../data/objectives";
-import type { LearningObjective } from "../../data/types";
-import { coverageLabel } from "../../utils/mappings";
+import { getPageObjectiveLabels } from "../../utils/curriculumCoverage";
 import styles from "./CurriculumPage.module.css";
 
 type CurriculumLayout = "list" | "outline";
@@ -124,45 +128,6 @@ function isContainerNode(item: CurriculumNode): boolean {
   return Boolean(item.children?.length);
 }
 
-function CoverageBadge({ coverage }: { coverage: LearningObjective["coverage"] }) {
-  const coverageClass =
-    coverage === "none"
-      ? styles.coverageNone
-      : coverage === "weak"
-        ? styles.coverageWeak
-        : coverage === "moderate"
-          ? styles.coverageModerate
-          : styles.coverageStrong;
-
-  return (
-    <span className={`${styles.coverageBadge} ${coverageClass}`}>{coverageLabel(coverage)}</span>
-  );
-}
-
-function ModuleObjectivesSummary({ module }: { module: CurriculumNode }) {
-  const moduleObjectives = useMemo(
-    () => getObjectivesForCurriculumModule(module, objectives),
-    [module],
-  );
-
-  if (moduleObjectives.length === 0) return null;
-
-  return (
-    <section className={styles.moduleSummary} aria-label="Learning objectives covered in this module">
-      <h2 className={styles.moduleSummaryTitle}>Learning objectives covered</h2>
-      <ul className={styles.moduleSummaryList}>
-        {moduleObjectives.map((objective) => (
-          <li key={objective.id} className={styles.moduleSummaryItem}>
-            <span className={styles.loLabel}>lo {objective.id}</span>
-            <span className={styles.moduleSummaryText}>{objective.title}</span>
-            <CoverageBadge coverage={objective.coverage} />
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
-
 type ContentRowProps = {
   item: CurriculumNode;
   onNavigate?: () => void;
@@ -172,6 +137,7 @@ function ContentRow({ item, onNavigate }: ContentRowProps) {
   const navigable = Boolean(onNavigate);
   const titleClass =
     item.type === "module" || item.type === "section" ? styles.containerTitle : styles.pageTitle;
+  const loTags = getPageObjectiveLabels(item, objectives);
 
   return (
     <li className={styles.row}>
@@ -189,7 +155,18 @@ function ContentRow({ item, onNavigate }: ContentRowProps) {
             <span className={styles.rowIcon}>
               <CurriculumItemIcon item={item} />
             </span>
-            <span className={titleClass}>{item.title}</span>
+            <div className={styles.pageContent}>
+              <span className={titleClass}>{item.title}</span>
+              {loTags.length > 0 && (
+                <ul className={styles.loTags} aria-label="Supported objectives">
+                  {loTags.map((tag) => (
+                    <li key={tag.id}>
+                      <span className={styles.loTag}>{tag.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
             {item.showEditLink && (
               <button type="button" className={styles.editLink}>
                 Edit Page
@@ -376,9 +353,19 @@ export function CurriculumPage() {
   };
 
   const pageTitle = currentContainer?.title ?? "Curriculum";
-  const pageLead = currentContainer
-    ? `Pages and activities inside ${currentContainer.title}.`
-    : "Create and arrange your learning materials below.";
+  const pageLead =
+    view === "learning" && parentModule
+      ? "See which objectives this module covers and the pages that support them."
+      : view === "detailed" && parentModule
+        ? "Analyze coverage strength, gaps, and objective alignment across this module."
+        : currentContainer
+          ? `Pages and activities inside ${currentContainer.title}.`
+          : "Create and arrange your learning materials below.";
+
+  const activeModule =
+    currentContainer?.type === "module"
+      ? currentContainer
+      : parentModule ?? null;
 
   return (
     <div className={styles.page}>
@@ -481,8 +468,6 @@ export function CurriculumPage() {
 
         {view === "basic" ? (
           <>
-            {parentModule && layout === "list" && <ModuleObjectivesSummary module={parentModule} />}
-
             {layout === "list" ? (
               <ul className={styles.list}>
                 {listItems.map((item) => (
@@ -511,11 +496,39 @@ export function CurriculumPage() {
               </ul>
             )}
           </>
+        ) : view === "detailed" ? (
+          activeModule ? (
+            <>
+              <CurriculumModuleInsights module={activeModule} objectives={objectives} />
+              <CurriculumCoverageMeter module={activeModule} />
+              <CurriculumMiniHeatmap module={activeModule} objectives={objectives} />
+              <ul className={styles.list}>
+                {listItems.map((item) => (
+                  <ContentRow
+                    key={item.id}
+                    item={item}
+                    onNavigate={
+                      isContainerNode(item) ? () => setPath([...path, item.id]) : undefined
+                    }
+                  />
+                ))}
+              </ul>
+            </>
+          ) : (
+            <div className={styles.viewPlaceholder}>
+              <p>
+                Open a <strong>module</strong> to see coverage meters, the objective × page matrix,
+                and module-level insights.
+              </p>
+            </div>
+          )
+        ) : activeModule ? (
+          <CurriculumObjectiveView module={activeModule} objectives={objectives} />
         ) : (
           <div className={styles.viewPlaceholder}>
             <p>
-              <strong>{view === "detailed" ? "Detailed" : "Learning"} view</strong> is not built in
-              this prototype yet. Switch to Basic to browse the curriculum list.
+              Open a <strong>module</strong> to switch to the objective-centric view — objectives
+              first, with supporting pages listed under each.
             </p>
           </div>
         )}

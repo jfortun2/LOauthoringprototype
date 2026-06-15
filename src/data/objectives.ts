@@ -1,4 +1,5 @@
 import type { LearningObjective, LearningObjectiveDraft, ObjectiveTagCounts } from "./types";
+import { hasWeakCoverage } from "../utils/mappings";
 import { enrichSubObjective } from "../utils/subObjectiveActivities";
 
 export const TOTAL_OBJECTIVES = 160;
@@ -13,14 +14,20 @@ const rawObjectives: LearningObjectiveDraft[] = [
         id: "1-1",
         title:
           "Rank ligand field strength and predict whether a complex is high-spin or low-spin.",
-        formativeCount: 2,
-        summativeCount: 1,
+        formativeCount: 3,
+        summativeCount: 3,
+        linkedPages: [
+          { id: "page-1", title: "Crystal Field Theory Intro", path: "Unit 1 › Module 1" },
+        ],
       },
       {
         id: "1-2",
         title: "Draw crystal field splitting diagrams for octahedral and tetrahedral geometries.",
-        formativeCount: 2,
-        summativeCount: 2,
+        formativeCount: 3,
+        summativeCount: 3,
+        linkedPages: [
+          { id: "page-2", title: "Complex Ion Energy Levels", path: "Unit 1 › Module 1" },
+        ],
       },
       {
         id: "1-3",
@@ -28,6 +35,10 @@ const rawObjectives: LearningObjectiveDraft[] = [
           "Use electron configurations to predict the number of unpaired electrons in a transition-metal complex.",
         formativeCount: 3,
         summativeCount: 3,
+        linkedPages: [
+          { id: "page-1", title: "Crystal Field Theory Intro", path: "Unit 1 › Module 1" },
+          { id: "page-2", title: "Complex Ion Energy Levels", path: "Unit 1 › Module 1" },
+        ],
       },
     ],
     linkedPages: [
@@ -37,8 +48,8 @@ const rawObjectives: LearningObjectiveDraft[] = [
     linkedAssessments: [
       { id: "act-1", title: "Practice: Splitting Diagrams", type: "formative" },
     ],
-    tagCounts: { pages: 5, subObjectives: 3, formative: 7, summative: 6 },
-    coverage: "moderate",
+    tagCounts: { pages: 5, subObjectives: 3, formative: 9, summative: 9 },
+    coverage: "strong",
     performancePercent: 72,
   },
   {
@@ -52,6 +63,10 @@ const rawObjectives: LearningObjectiveDraft[] = [
           "Use values from ICE table with the Ka or Kb expression to determine hydronium or hydroxide concentrations.",
         formativeCount: 3,
         summativeCount: 3,
+        linkedPages: [
+          { id: "page-3", title: "Polyprotic Acids", path: "Unit 2 › Module 2" },
+          { id: "page-4", title: "Strong and Weak Acids and Bases Summary", path: "Unit 2 › Module 2" },
+        ],
         activityLinks: [
           "survey_ins_diary14-q10",
           "survey_ins_diary12-q10",
@@ -63,18 +78,23 @@ const rawObjectives: LearningObjectiveDraft[] = [
         title: "Given concentrations of species, calculate Ka and Kb.",
         formativeCount: 3,
         summativeCount: 3,
+        linkedPages: [
+          { id: "page-5", title: "Polyprotic Acids (CyberLearn)", path: "Unit 2 › Module 2" },
+        ],
       },
       {
         id: "2-3",
         title: "Determine relative concentrations of species using an ICE table.",
         formativeCount: 1,
         summativeCount: 0,
+        linkedPages: [],
       },
       {
         id: "2-4",
         title: "Calculate [H3O+] from pH (and vice versa) and calculate [OH-] from pOH (and vice versa).",
         formativeCount: 0,
         summativeCount: 0,
+        linkedPages: [],
       },
     ],
     linkedPages: [
@@ -86,7 +106,7 @@ const rawObjectives: LearningObjectiveDraft[] = [
       { id: "act-2", title: "ICE Table Checkpoint", type: "formative" },
       { id: "act-3", title: "Polyprotic Equilibrium Quiz", type: "summative" },
     ],
-    coverage: "strong",
+    coverage: "weak",
     performancePercent: 58,
   },
   {
@@ -99,18 +119,23 @@ const rawObjectives: LearningObjectiveDraft[] = [
         title: "Convert between mass, moles, and particle count using molar mass and Avogadro's number.",
         formativeCount: 1,
         summativeCount: 0,
+        linkedPages: [],
       },
       {
         id: "3-2",
         title: "Balance chemical equations and identify the limiting reactant.",
         formativeCount: 2,
         summativeCount: 1,
+        linkedPages: [
+          { id: "page-7", title: "Limiting Reactant", path: "Unit 3 › Module 4" },
+        ],
       },
       {
         id: "3-3",
         title: "Calculate theoretical yield and percent yield from experimental data.",
         formativeCount: 1,
         summativeCount: 1,
+        linkedPages: [],
       },
     ],
     linkedPages: [
@@ -129,22 +154,22 @@ const rawObjectives: LearningObjectiveDraft[] = [
       {
         id: "4-1",
         title: "Calculate the pH of a buffer given concentrations of weak acid and conjugate base.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "4-2",
         title:
           "Determine how much strong acid or base is needed to reach a target pH in a buffered solution.",
-        formativeCount: 1,
-        summativeCount: 1,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "4-3",
         title:
           "Explain why buffers resist large changes in pH upon addition of small amounts of acid or base.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
     ],
     linkedPages: [
@@ -164,28 +189,28 @@ const rawObjectives: LearningObjectiveDraft[] = [
       {
         id: "5-1",
         title: "Write equilibrium expressions from balanced chemical equations.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "5-2",
         title: "Calculate Kc or Kp from equilibrium concentration or pressure data.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "5-3",
         title:
           "Use reaction quotients to predict the direction a system will shift to reach equilibrium.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
     ],
     linkedPages: [],
     linkedAssessments: [
       { id: "act-2", title: "ICE Table Checkpoint", type: "formative" },
     ],
-    coverage: "weak",
+    coverage: "moderate",
     performancePercent: 41,
   },
   {
@@ -197,22 +222,22 @@ const rawObjectives: LearningObjectiveDraft[] = [
         id: "6-1",
         title:
           "Solve for unknown equilibrium concentrations using ICE tables and the equilibrium constant.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "6-2",
         title:
           "Relate the magnitude of K to whether products or reactants are favored at equilibrium.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
     ],
     linkedPages: [],
     linkedAssessments: [
       { id: "act-2", title: "ICE Table Checkpoint", type: "formative" },
     ],
-    coverage: "weak",
+    coverage: "moderate",
     performancePercent: 45,
   },
   {
@@ -223,27 +248,27 @@ const rawObjectives: LearningObjectiveDraft[] = [
       {
         id: "7-1",
         title: "Compare Ka and Kb values to rank acids and bases from strongest to weakest.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "7-2",
         title: "Predict whether a salt solution will be acidic, basic, or neutral from its constituent ions.",
-        formativeCount: 1,
-        summativeCount: 1,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "7-3",
         title: "Use ionization constants to estimate percent ionization for weak acids and bases.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
     ],
     linkedPages: [
       { id: "page-3", title: "Polyprotic Acids", path: "Unit 2 › Module 2" },
     ],
     linkedAssessments: [],
-    coverage: "weak",
+    coverage: "moderate",
     performancePercent: 52,
   },
   {
@@ -253,19 +278,19 @@ const rawObjectives: LearningObjectiveDraft[] = [
       {
         id: "8-1",
         title: "Apply PV = nRT to solve for any one variable given the others.",
-        formativeCount: 2,
-        summativeCount: 1,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "8-2",
         title: "Use the combined gas law and Dalton's law of partial pressures in multi-step problems.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
     ],
     linkedPages: [],
     linkedAssessments: [],
-    coverage: "none",
+    coverage: "moderate",
     performancePercent: null,
   },
   {
@@ -275,25 +300,25 @@ const rawObjectives: LearningObjectiveDraft[] = [
       {
         id: "9-1",
         title: "Calculate ΔS° from standard molar entropies for reactants and products.",
-        formativeCount: 2,
-        summativeCount: 1,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "9-2",
         title: "Predict whether entropy increases or decreases for phase changes and reactions.",
-        formativeCount: 1,
-        summativeCount: 1,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "9-3",
         title: "Relate disorder at the molecular level to macroscopic entropy changes.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
     ],
     linkedPages: [],
     linkedAssessments: [],
-    coverage: "none",
+    coverage: "moderate",
     performancePercent: null,
   },
   {
@@ -303,25 +328,25 @@ const rawObjectives: LearningObjectiveDraft[] = [
       {
         id: "10-1",
         title: "Use ΔG = ΔH − TΔS to predict spontaneity at various temperatures.",
-        formativeCount: 2,
-        summativeCount: 1,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "10-2",
         title: "Interpret Gibbs free energy diagrams for coupled reactions.",
-        formativeCount: 1,
-        summativeCount: 1,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "10-3",
         title: "Distinguish between thermodynamic favorability and reaction rate.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
     ],
     linkedPages: [],
     linkedAssessments: [],
-    coverage: "none",
+    coverage: "moderate",
     performancePercent: null,
   },
   {
@@ -331,25 +356,25 @@ const rawObjectives: LearningObjectiveDraft[] = [
       {
         id: "11-1",
         title: "Determine reaction order from experimental rate data.",
-        formativeCount: 2,
-        summativeCount: 1,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "11-2",
         title: "Write rate laws from initial rates and concentration changes.",
-        formativeCount: 2,
-        summativeCount: 1,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "11-3",
         title: "Explain how temperature and catalysts affect reaction rates.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
     ],
     linkedPages: [],
     linkedAssessments: [],
-    coverage: "weak",
+    coverage: "moderate",
     performancePercent: 38,
   },
   {
@@ -359,25 +384,25 @@ const rawObjectives: LearningObjectiveDraft[] = [
       {
         id: "12-1",
         title: "Identify oxidation and reduction half-reactions in aqueous solutions.",
-        formativeCount: 2,
-        summativeCount: 1,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "12-2",
         title: "Balance electrons and atoms in acidic and basic media.",
-        formativeCount: 2,
-        summativeCount: 1,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "12-3",
         title: "Combine half-reactions to write balanced overall redox equations.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
     ],
     linkedPages: [],
     linkedAssessments: [],
-    coverage: "weak",
+    coverage: "moderate",
     performancePercent: 44,
   },
   {
@@ -387,25 +412,25 @@ const rawObjectives: LearningObjectiveDraft[] = [
       {
         id: "13-1",
         title: "Calculate ΔG° from standard cell potentials using ΔG° = −nFE°.",
-        formativeCount: 2,
-        summativeCount: 1,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "13-2",
         title: "Use the Nernst equation to find cell potential under non-standard conditions.",
-        formativeCount: 2,
-        summativeCount: 1,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "13-3",
         title: "Relate standard reduction potentials to the direction of spontaneous redox reactions.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
     ],
     linkedPages: [],
     linkedAssessments: [],
-    coverage: "weak",
+    coverage: "moderate",
     performancePercent: 38,
   },
   {
@@ -415,35 +440,41 @@ const rawObjectives: LearningObjectiveDraft[] = [
       {
         id: "14-1",
         title: "Apply q = mcΔT to calculate heat absorbed or released in temperature changes.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "14-2",
         title: "Use specific heat and heat of fusion or vaporization in phase-change calculations.",
-        formativeCount: 1,
-        summativeCount: 0,
+        formativeCount: 3,
+        summativeCount: 3,
       },
       {
         id: "14-3",
         title: "Distinguish between heat flow at constant pressure (ΔH) and constant volume (ΔU).",
-        formativeCount: 0,
-        summativeCount: 1,
+        formativeCount: 3,
+        summativeCount: 3,
       },
     ],
     linkedPages: [
       { id: "page-9", title: "Heat Capacity", path: "Unit 3 › Module 5" },
     ],
     linkedAssessments: [],
-    coverage: "weak",
+    coverage: "moderate",
     performancePercent: 55,
   },
 ];
 
-export const objectives: LearningObjective[] = rawObjectives.map((objective) => ({
-  ...objective,
-  subObjectives: objective.subObjectives.map((sub) => enrichSubObjective(sub)),
-}));
+export const objectives: LearningObjective[] = rawObjectives.map((objective) => {
+  const enriched = {
+    ...objective,
+    subObjectives: objective.subObjectives.map((sub) => enrichSubObjective(sub)),
+  };
+  return {
+    ...enriched,
+    coverage: hasWeakCoverage(enriched) ? "weak" : enriched.coverage,
+  };
+});
 
 export function getObjectiveTagCounts(objective: LearningObjective): ObjectiveTagCounts {
   if (objective.tagCounts) return objective.tagCounts;

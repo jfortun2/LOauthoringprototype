@@ -13,7 +13,7 @@
 }
 
 .pageHeader {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .heading {
@@ -49,7 +49,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 
 .toolbarLeft {
@@ -128,15 +128,15 @@
 }
 
 .filterPill:hover {
-  border-color: var(--color-status-warning);
+  border-color: var(--color-border-danger);
   color: var(--color-text-primary);
 }
 
 .filterPillActive,
 .filterPillActive:hover {
-  border-color: var(--color-status-warning);
-  background: var(--color-status-warning-bg);
-  color: var(--color-status-warning);
+  border-color: var(--color-border-danger);
+  background: #fff;
+  color: var(--color-border-danger);
   font-weight: 600;
 }
 
@@ -144,7 +144,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--color-status-warning);
+  background: var(--color-border-danger);
   flex-shrink: 0;
 }
 
@@ -156,14 +156,14 @@
   height: 20px;
   padding: 0 6px;
   border-radius: var(--radius-pill);
-  background: var(--color-status-warning-bg);
+  background: #ffecec;
   font-size: 12px;
   font-weight: 700;
-  color: var(--color-status-warning);
+  color: var(--color-border-danger);
 }
 
 .filterPillActive .filterPillCount {
-  background: var(--color-status-warning);
+  background: var(--color-border-danger);
   color: #fff;
 }
 
@@ -207,8 +207,9 @@
   background: var(--color-bg-card);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
-  padding: 64px 24px 24px;
+  padding: 32px 20px 20px;
   position: relative;
+  border: 1px solid var(--color-border-muted);
 }
 
 .listRow {

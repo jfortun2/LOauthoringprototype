@@ -50,9 +50,10 @@ export function buildSubObjectiveActivities(
 type SubObjectiveInput = SubObjectiveDraft;
 
 export function enrichSubObjective(sub: SubObjectiveInput): SubObjective {
-  const { activityLinks, ...rest } = sub;
+  const { activityLinks, linkedPages, ...rest } = sub;
   return {
     ...rest,
+    linkedPages: linkedPages ?? [],
     activities: buildSubObjectiveActivities(
       sub.id,
       sub.formativeCount,

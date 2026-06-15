@@ -73,6 +73,12 @@ export function countUnderAssessedSubObjectives(objective: LearningObjective): n
   return objective.subObjectives.filter(subObjectiveNeedsActivities).length;
 }
 
+/** Weak coverage = at least one sub-objective below 3 formative or 3 summative activities */
+export function hasWeakCoverage(objective: LearningObjective): boolean {
+  if (objective.subObjectives.length === 0) return false;
+  return objective.subObjectives.some(subObjectiveNeedsActivities);
+}
+
 export function coverageLabel(strength: LearningObjective["coverage"]): string {
   switch (strength) {
     case "strong":

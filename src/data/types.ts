@@ -24,11 +24,13 @@ export type SubObjective = {
   formativeCount: number;
   summativeCount: number;
   activities: SubObjectiveActivity[];
+  linkedPages: LinkedPage[];
 };
 
 /** Used before activity enrichment at load time */
-export type SubObjectiveDraft = Omit<SubObjective, "activities"> & {
+export type SubObjectiveDraft = Omit<SubObjective, "activities" | "linkedPages"> & {
   activityLinks?: string[];
+  linkedPages?: LinkedPage[];
 };
 
 export type ObjectiveTagCounts = {

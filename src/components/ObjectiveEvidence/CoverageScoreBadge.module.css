@@ -1,0 +1,75 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
+}
+
+.badgeMd {
+  padding: 6px 12px;
+}
+
+.score {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-primary);
+}
+
+.badgeMd .score {
+  font-size: 22px;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 88px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 14px;
+  white-space: nowrap;
+  color: var(--color-text-secondary);
+}
+
+.meterTrack {
+  display: block;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--color-border-subtle);
+  overflow: hidden;
+}
+
+.badgeMd .meterTrack {
+  height: 5px;
+}
+
+.meterFill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--color-text-muted);
+}
+
+/* Only weak coverage (sub-objective activity gaps) gets a warning treatment */
+.badge.strengthWeak {
+  border-color: #f87171;
+  background: #fef2f2;
+}
+
+.badge.strengthWeak .score,
+.badge.strengthWeak .label {
+  color: #991b1b;
+}
+
+.badge.strengthWeak .meterFill {
+  background: #991b1b;
+}

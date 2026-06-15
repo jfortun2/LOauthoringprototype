@@ -22,10 +22,19 @@
   --color-border: #ced1d9;
   --color-border-bold: #8ab8e5;
   --color-border-light: #ced1d9;
-  --color-border-subtle: #eef0f3;
+  --color-border-subtle: #e6e9f2;
   --color-border-muted: #f3f4f8;
+  --color-border-danger: #ff4040;
   --color-accent-blue: #deecff;
   --color-accent-orange: #ffecde;
+  --color-pill-formative-bg: #f3f4f8;
+  --color-pill-formative-border: #c5d4e8;
+  --color-pill-formative-text: #45464c;
+  --color-pill-formative-icon: #5b7fa8;
+  --color-pill-summative-bg: #f3f4f8;
+  --color-pill-summative-border: #d8cfc4;
+  --color-pill-summative-text: #45464c;
+  --color-pill-summative-icon: #8a7359;
   --color-accent-muted: #e6e9f2;
   --color-avatar: #004a9f;
   --color-exit-bg: rgba(161, 161, 170, 0.2);
@@ -58,10 +67,12 @@
   --radius-md: 6px;
   --radius-lg: 8px;
   --radius-xl: 12px;
+  --radius-tag: 12px;
   --radius-pill: 999px;
 
   --shadow-sm: 0 2px 5px rgba(0, 50, 99, 0.05);
   --shadow-md: 0 2px 10px rgba(0, 50, 99, 0.1);
+  --shadow-card: 0 2px 5px rgba(0, 50, 99, 0.05);
   --shadow-btn: 0 2px 4px rgba(0, 52, 99, 0.1);
   --focus-ring: 0 0 0 2px #fff, 0 0 0 4px var(--color-link);
 }

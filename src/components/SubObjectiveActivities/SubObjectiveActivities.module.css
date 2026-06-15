@@ -30,14 +30,16 @@
 }
 
 .tabFormative.tabActive {
-  background: var(--color-accent-blue);
-  color: var(--color-text-accent-blue);
+  background: var(--color-pill-formative-bg);
+  border: 1px solid var(--color-pill-formative-border);
+  color: var(--color-pill-formative-text);
   box-shadow: var(--shadow-sm);
 }
 
 .tabSummative.tabActive {
-  background: var(--color-accent-orange);
-  color: var(--color-text-accent-orange);
+  background: var(--color-pill-summative-bg);
+  border: 1px solid var(--color-pill-summative-border);
+  color: var(--color-pill-summative-text);
   box-shadow: var(--shadow-sm);
 }
 
@@ -121,13 +123,15 @@
 }
 
 .activityIconFormative {
-  background: var(--color-accent-blue);
-  color: var(--color-text-accent-blue);
+  background: var(--color-pill-formative-bg);
+  border: 1px solid var(--color-pill-formative-border);
+  color: var(--color-pill-formative-icon);
 }
 
 .activityIconSummative {
-  background: var(--color-accent-orange);
-  color: var(--color-text-accent-orange);
+  background: var(--color-pill-summative-bg);
+  border: 1px solid var(--color-pill-summative-border);
+  color: var(--color-pill-summative-icon);
 }
 
 .activityBody {

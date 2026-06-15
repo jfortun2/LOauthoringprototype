@@ -1,7 +1,7 @@
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-3);
+  gap: 12px;
   align-items: center;
 }
 
@@ -12,7 +12,7 @@
   height: 44px;
   padding: 4px 12px;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-tag);
   font-size: 14px;
   font-weight: 600;
   line-height: 16px;
@@ -26,11 +26,23 @@
   height: 44px;
   padding: 4px 12px;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-tag);
   font-size: 14px;
   font-weight: 600;
   line-height: 16px;
   color: var(--color-text-primary);
+}
+
+.subGroupPillWarning {
+  border-color: var(--color-border-danger);
+}
+
+.warningIcon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  color: var(--color-border-danger);
 }
 
 .subCount {
@@ -50,31 +62,30 @@
 }
 
 .formativePill {
-  background: var(--color-accent-blue);
-  color: var(--color-text-accent-blue);
-  margin-left: var(--space-3);
+  background: var(--color-pill-formative-bg);
+  border: 1px solid var(--color-pill-formative-border);
+  color: var(--color-pill-formative-text);
+  margin-left: 12px;
+}
+
+.formativePill .icon {
+  color: var(--color-pill-formative-icon);
 }
 
 .summativePill {
-  background: var(--color-accent-orange);
-  color: var(--color-text-accent-orange);
-  margin-left: var(--space-3);
+  background: var(--color-pill-summative-bg);
+  border: 1px solid var(--color-pill-summative-border);
+  color: var(--color-pill-summative-text);
+  margin-left: 12px;
+}
+
+.summativePill .icon {
+  color: var(--color-pill-summative-icon);
 }
 
 .icon {
   flex-shrink: 0;
+  width: 20px;
+  height: 20px;
   color: currentColor;
-}
-
-.compactTags {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-}
-
-.compactTags .formativePill,
-.compactTags .summativePill {
-  margin-left: 0;
-  height: 27px;
-  padding: 4px 6px;
 }
