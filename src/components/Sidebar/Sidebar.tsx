@@ -155,7 +155,11 @@ export function Sidebar() {
             </span>
           </button>
 
-          <button type="button" className={`${styles.navItem} ${styles.navItemMuted}`}>
+          <button
+            type="button"
+            className={`${styles.navItem} ${styles.navItemMuted} ${page === "insights" ? styles.navItemActive : ""}`}
+            onClick={() => setPage("insights")}
+          >
             <span className={styles.navIcon}>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M4 16l4-8 4 4 4-8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />

@@ -9,12 +9,11 @@ import {
   IconSearch,
   IconSort,
 } from "../../components/icons/Icons";
+import { useAppNavigation } from "../../context/AppNavigationContext";
 import { courseUnits } from "../../data/courseUnits";
 import { objectives as initialObjectives } from "../../data/objectives";
 import type { LearningObjective } from "../../data/types";
-import type { ProductModel } from "../../utils/objectiveMappingViews";
 import { hasMissingActivities } from "../../utils/objectiveMappingViews";
-import { ProductModelToggle } from "../../components/ObjectiveMapping/ProductModelToggle";
 import { getContentById } from "../../utils/mappings";
 import styles from "./LearningObjectivesPage.module.css";
 
@@ -39,15 +38,14 @@ type RemoveTarget = {
 };
 
 export function LearningObjectivesPage() {
+  const { openInsights } = useAppNavigation();
   const [objectivesList, setObjectivesList] = useState<LearningObjective[]>(() => initialObjectives);
   const [search, setSearch] = useState("");
   const [missingActivitiesOnly, setMissingActivitiesOnly] = useState(false);
-  const [productModel, setProductModel] = useState<ProductModel>("strict");
-  const [selectedSubByObjective, setSelectedSubByObjective] = useState<Record<string, string | null>>({});
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
   const [highlightedObjectiveId, setHighlightedObjectiveId] = useState<string | null>(null);
-  const [outlineOpen, setOutlineOpen] = useState(false);
+  const [outlineOpen, setOutlineOpen] = useState(true);
   const [editTarget, setEditTarget] = useState<EditTarget | null>(null);
   const [removeTarget, setRemoveTarget] = useState<RemoveTarget | null>(null);
 
@@ -77,9 +75,6 @@ export function LearningObjectivesPage() {
   const toggleExpanded = (id: string) => {
     setExpandedId((current) => (current === id ? null : id));
     setHighlightedObjectiveId(id);
-    if (expandedId === id) {
-      setSelectedSubByObjective((current) => ({ ...current, [id]: null }));
-    }
   };
 
   const handleSelectUnit = useCallback((unitId: string) => {
@@ -94,7 +89,8 @@ export function LearningObjectivesPage() {
     const linkedObjective = objectivesList.find(
       (o) =>
         o.linkedPages.some((p) => p.id === contentId) ||
-        o.linkedAssessments.some((a) => a.id === contentId),
+        o.linkedAssessments.some((a) => a.id === contentId) ||
+        o.subObjectives.some((sub) => sub.linkedPages.some((p) => p.id === contentId)),
     );
     if (linkedObjective) {
       const unit = courseUnits.find((u) => u.objectiveIds.includes(linkedObjective.id));
@@ -119,6 +115,30 @@ export function LearningObjectivesPage() {
       kind: "objective",
       objectiveId,
       label: objective.title,
+    });
+  };
+
+  const openEditSubObjective = (objectiveId: string, subObjectiveId: string) => {
+    const objective = objectivesList.find((o) => o.id === objectiveId);
+    const sub = objective?.subObjectives.find((s) => s.id === subObjectiveId);
+    if (!sub) return;
+    setEditTarget({
+      kind: "subObjective",
+      objectiveId,
+      subObjectiveId,
+      value: sub.title,
+    });
+  };
+
+  const openRemoveSubObjective = (objectiveId: string, subObjectiveId: string) => {
+    const objective = objectivesList.find((o) => o.id === objectiveId);
+    const sub = objective?.subObjectives.find((s) => s.id === subObjectiveId);
+    if (!sub) return;
+    setRemoveTarget({
+      kind: "subObjective",
+      objectiveId,
+      subObjectiveId,
+      label: sub.title,
     });
   };
 
@@ -193,18 +213,10 @@ export function LearningObjectivesPage() {
         <header className={styles.pageHeader}>
           <h1 className={styles.heading}>Learning Objectives</h1>
           <p className={styles.lead}>
-            Compare two mapping models for learning objectives and sub-objectives. Expand an
-            objective to see how pages and activities link in each version.
+            Structure learning objectives, link activities, and review coverage. Proficiency badges
+            reflect learner performance — open Insights for deeper analysis.
           </p>
         </header>
-
-        <ProductModelToggle
-          value={productModel}
-          onChange={(model) => {
-            setProductModel(model);
-            setSelectedSubByObjective({});
-          }}
-        />
 
         <div className={styles.toolbar}>
           <div className={styles.toolbarLeft}>
@@ -290,20 +302,15 @@ export function LearningObjectivesPage() {
                       <li key={objective.id}>
                         <ObjectiveCard
                           objective={objective}
-                          productModel={productModel}
                           expanded={expandedId === objective.id}
                           highlighted={highlightedObjectiveId === objective.id}
-                          selectedSubId={selectedSubByObjective[objective.id] ?? null}
                           onToggle={() => toggleExpanded(objective.id)}
-                          onSelectSub={(subId) =>
-                            setSelectedSubByObjective((current) => ({
-                              ...current,
-                              [objective.id]: subId,
-                            }))
-                          }
                           onSelectContent={handleSelectContent}
                           onEditObjective={openEditObjective}
                           onRemoveObjective={openRemoveObjective}
+                          onEditSubObjective={openEditSubObjective}
+                          onRemoveSubObjective={openRemoveSubObjective}
+                          onViewInsights={openInsights}
                         />
                       </li>
                     ))}

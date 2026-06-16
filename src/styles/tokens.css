@@ -48,6 +48,15 @@
   --color-status-info: #1e40af;
   --color-status-info-bg: #eff6ff;
 
+  --color-proficiency-high: #047857;
+  --color-proficiency-high-bg: #ecfdf5;
+  --color-proficiency-medium: #b45309;
+  --color-proficiency-medium-bg: #fffbeb;
+  --color-proficiency-low: #b91c1c;
+  --color-proficiency-low-bg: #fef2f2;
+  --color-proficiency-insufficient: #757682;
+  --color-proficiency-insufficient-bg: #f3f4f8;
+
   --font-sans: "Open Sans", system-ui, sans-serif;
   --font-heading: "Open Sans", var(--font-sans);
 

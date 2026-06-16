@@ -1,0 +1,51 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 4px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
+}
+
+.iconPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+
+.iconPill svg {
+  width: 20px;
+  height: 20px;
+}
+
+.iconPillFormative {
+  background: var(--color-accent-blue);
+  color: var(--color-text-accent-blue);
+}
+
+.iconPillSummative {
+  background: var(--color-accent-orange);
+  color: var(--color-text-accent-orange);
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16px;
+  color: var(--color-text-button);
+}

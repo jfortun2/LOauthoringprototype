@@ -37,6 +37,20 @@
   border-color: var(--color-border-danger);
 }
 
+.compactTags {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.compactTags .formativePill,
+.compactTags .summativePill {
+  margin-left: 0;
+  padding: 3px 8px;
+  font-size: 12px;
+}
+
 .warningIcon {
   flex-shrink: 0;
   width: 16px;
