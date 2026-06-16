@@ -1,0 +1,60 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.compact {
+  padding: 1px 8px;
+  font-size: 11px;
+  line-height: 18px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.high {
+  background: var(--color-proficiency-high-bg);
+  color: var(--color-proficiency-high);
+}
+
+.high .dot {
+  background: var(--color-proficiency-high);
+}
+
+.medium {
+  background: var(--color-proficiency-medium-bg);
+  color: var(--color-proficiency-medium);
+}
+
+.medium .dot {
+  background: var(--color-proficiency-medium);
+}
+
+.low {
+  background: var(--color-proficiency-low-bg);
+  color: var(--color-proficiency-low);
+}
+
+.low .dot {
+  background: var(--color-proficiency-low);
+}
+
+.insufficient {
+  background: var(--color-proficiency-insufficient-bg);
+  color: var(--color-proficiency-insufficient);
+}
+
+.insufficient .dot {
+  background: var(--color-proficiency-insufficient);
+}

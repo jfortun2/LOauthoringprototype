@@ -1,0 +1,64 @@
+.preview {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.formative,
+.summative {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.formative {
+  background: var(--color-pill-formative-bg);
+  border: 1px solid var(--color-pill-formative-border);
+  color: var(--color-pill-formative-text);
+}
+
+.formative .icon {
+  color: var(--color-pill-formative-icon);
+}
+
+.summative {
+  background: var(--color-pill-summative-bg);
+  border: 1px solid var(--color-pill-summative-border);
+  color: var(--color-pill-summative-text);
+}
+
+.summative .icon {
+  color: var(--color-pill-summative-icon);
+}
+
+.warning.formative {
+  border-color: var(--color-border-danger);
+  box-shadow: inset 0 0 0 1px var(--color-border-danger);
+}
+
+.warning.summative {
+  border-color: var(--color-border-danger);
+  box-shadow: inset 0 0 0 1px var(--color-border-danger);
+}
+
+.warningIcon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.icon {
+  width: 14px;
+  height: 14px;
+}
+
+.count {
+  min-width: 10px;
+  text-align: center;
+}

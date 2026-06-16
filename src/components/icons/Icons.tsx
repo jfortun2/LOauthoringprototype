@@ -161,6 +161,56 @@ export function IconTrash({ className }: IconProps) {
   );
 }
 
+export function IconSearch({ className }: IconProps) {
+  return (
+    <svg className={className} width="18" height="18" viewBox="0 0 18 18" aria-hidden>
+      <circle cx="8" cy="8" r="5.5" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <path d="M12 12l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function IconChevronDown({ className }: IconProps) {
+  return (
+    <svg className={className} width="16" height="16" viewBox="0 0 16 16" aria-hidden>
+      <path
+        d="M4 6l4 4 4-4"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        fill="none"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+export function IconPage({ className }: IconProps) {
+  return (
+    <svg className={className} width="14" height="16" viewBox="0 0 14 16" aria-hidden>
+      <path
+        d="M2 1h6l4 4v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        fill="none"
+      />
+    </svg>
+  );
+}
+
+export function IconActivity({ className }: IconProps) {
+  return (
+    <svg className={className} width="14" height="14" viewBox="0 0 14 14" aria-hidden>
+      <path
+        d="M3 11V3l4 2 4-2v8"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        fill="none"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function IconPencil({ className }: IconProps) {
   return (
     <svg className={className} width="8" height="14" viewBox="0 0 8 14" aria-hidden>
@@ -169,6 +219,84 @@ export function IconPencil({ className }: IconProps) {
         stroke="currentColor"
         strokeWidth="1.2"
         fill="none"
+      />
+    </svg>
+  );
+}
+
+export function IconPlus({ className }: IconProps) {
+  return (
+    <svg className={className} width="16" height="16" viewBox="0 0 16 16" aria-hidden>
+      <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function IconWarningTriangle({ className }: IconProps) {
+  return (
+    <svg className={className} width="14" height="14" viewBox="0 0 14 14" aria-hidden>
+      <path
+        d="M7 1.8 13 12H1L7 1.8Z"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      <path d="M7 5.5v3M7 10.2v.4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function IconClipboardList({ className }: IconProps) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 20 20" aria-hidden>
+      <rect x="5" y="2" width="10" height="14" rx="1" stroke="currentColor" strokeWidth="1.2" fill="none" />
+      <path d="M8 6h4M8 9h4M8 12h2" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function IconFlag({ className }: IconProps) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 20 20" aria-hidden>
+      <path
+        d="M5 3v14M5 3h9l-2 3 2 3H5"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        fill="none"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function IconCircleChevronLeft({ className }: IconProps) {
+  return (
+    <svg className={className} width="30" height="30" viewBox="0 0 30 30" aria-hidden>
+      <circle cx="15" cy="15" r="14" stroke="currentColor" strokeWidth="1" fill="#fff" />
+      <path
+        d="M17 10l-5 5 5 5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function IconCircleChevronRight({ className }: IconProps) {
+  return (
+    <svg className={className} width="30" height="30" viewBox="0 0 30 30" aria-hidden>
+      <circle cx="15" cy="15" r="14" stroke="currentColor" strokeWidth="1" fill="#fff" />
+      <path
+        d="M13 10l5 5-5 5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

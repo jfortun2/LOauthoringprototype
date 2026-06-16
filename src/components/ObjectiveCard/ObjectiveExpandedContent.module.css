@@ -1,0 +1,142 @@
+.expanded {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section {
+  padding: 8px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.btnAdd {
+  padding: 8px 24px;
+  border: 1px solid var(--color-border-bold);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
+  color: var(--color-text-button);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16px;
+  box-shadow: var(--shadow-btn);
+}
+
+.subList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.subRow {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.subRowWarning {
+  border-color: var(--color-border-danger);
+}
+
+.subRowExpanded {
+  position: relative;
+  padding: 12px;
+}
+
+.subRowMain {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.subRowTop {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.subRowBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  padding: 8px 12px 8px 0;
+  min-height: 47px;
+  text-align: left;
+}
+
+.subRowBtn:hover {
+  background: var(--color-bg-subtle);
+}
+
+.subTitle {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text-primary);
+}
+
+.subMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.subTagsWrap {
+  display: inline-flex;
+  padding: 4px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-page);
+  align-self: flex-start;
+}
+
+.subWarningIcon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--color-border-danger);
+}
+
+.pageLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pageLink {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--color-link);
+  text-align: left;
+  padding: 4px 0;
+}
+
+.emptyHint {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}

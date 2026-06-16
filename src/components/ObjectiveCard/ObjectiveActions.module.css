@@ -1,0 +1,30 @@
+.actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+}
+
+.iconBtn:hover {
+  background: var(--color-bg-subtle);
+  color: var(--color-text-button);
+}
+
+.iconBtnDanger:hover {
+  color: var(--color-btn-danger);
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}

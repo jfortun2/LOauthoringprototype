@@ -1,119 +1,120 @@
-import type { LearningObjective } from "../../data/objectives";
-import {
-  IconActivities,
-  IconPages,
-  IconPencil,
-  IconSubObjectives,
-  IconTrash,
-} from "../icons/Icons";
+import { getObjectiveProficiency, hasProficiencyData } from "../../data/proficiency";
+import type { LearningObjective } from "../../data/types";
+import { countUnderAssessedSubObjectives } from "../../utils/mappings";
+import { ProficiencyBadge } from "../ProficiencyBadge/ProficiencyBadge";
+import { TagPills } from "../TagPills/TagPills";
+import { IconWarningTriangle } from "../icons/Icons";
+import { RowExpandChevron } from "../RowExpandChevron/RowExpandChevron";
+import { ObjectiveActions } from "./ObjectiveActions";
+import { ObjectiveExpandedContent } from "./ObjectiveExpandedContent";
 import styles from "./ObjectiveCard.module.css";
 
 type ObjectiveCardProps = {
   objective: LearningObjective;
   expanded: boolean;
+  highlighted: boolean;
   onToggle: () => void;
+  onSelectContent?: (contentId: string) => void;
+  onEditObjective: (objectiveId: string) => void;
+  onRemoveObjective: (objectiveId: string) => void;
+  onEditSubObjective: (objectiveId: string, subObjectiveId: string) => void;
+  onRemoveSubObjective: (objectiveId: string, subObjectiveId: string) => void;
+  onViewInsights: (objectiveId: string) => void;
 };
 
 export function ObjectiveCard({
   objective,
   expanded,
+  highlighted,
   onToggle,
+  onSelectContent,
+  onEditObjective,
+  onRemoveObjective,
+  onEditSubObjective,
+  onRemoveSubObjective,
+  onViewInsights,
 }: ObjectiveCardProps) {
-  const showDetails =
-    expanded &&
-    (objective.subObjectiveItems?.length || objective.pageLinks?.length);
+  const proficiency = getObjectiveProficiency(objective);
+  const showInsightsLink = hasProficiencyData(proficiency);
+  const underAssessedCount = countUnderAssessedSubObjectives(objective);
 
   return (
-    <article className={styles.card} data-node-id="2:1343">
-      <div className={styles.cardInner}>
-        <div className={styles.headerRow}>
-          <button
-            type="button"
-            className={styles.titleButton}
-            onClick={onToggle}
-            aria-expanded={expanded}
-          >
-            {objective.title}
-          </button>
-          <div className={styles.stats}>
-            <div className={styles.stat}>
-              <IconSubObjectives className={styles.statIcon} />
-              <span>Sub-Objectives {objective.subObjectives}</span>
-            </div>
-            <div className={styles.stat}>
-              <IconPages className={styles.statIcon} />
-              <span>Pages {objective.pages}</span>
-            </div>
-            <div className={styles.stat}>
-              <IconActivities className={styles.statIcon} />
-              <span>Activities {objective.activities}</span>
-            </div>
+    <article
+      className={`${styles.card} ${highlighted ? styles.cardHighlighted : ""} ${expanded ? styles.cardExpanded : ""}`}
+      id={`objective-${objective.id}`}
+    >
+      <div className={styles.cardBody}>
+        <RowExpandChevron
+          expanded={expanded}
+          onClick={onToggle}
+          label={expanded ? "Collapse learning objective" : "Expand learning objective"}
+        />
+        <span className={styles.loLabel}>lo {objective.id}</span>
+        <div className={styles.content}>
+          <div className={styles.headerRow}>
+            <button
+              type="button"
+              className={styles.headerBtn}
+              onClick={onToggle}
+              aria-expanded={expanded}
+            >
+              <h3 className={styles.title}>{objective.title}</h3>
+            </button>
+            <ObjectiveActions
+              editLabel="Edit learning objective"
+              removeLabel="Remove learning objective"
+              onEdit={() => onEditObjective(objective.id)}
+              onRemove={() => onRemoveObjective(objective.id)}
+            />
           </div>
+
+          {!expanded && (
+            <div className={styles.collapsedBody}>
+              <div className={styles.tagsRow}>
+                <TagPills objective={objective} />
+                <div className={styles.proficiencyStrip}>
+                  <ProficiencyBadge level={proficiency.level} compact />
+                  {showInsightsLink && (
+                    <button
+                      type="button"
+                      className={styles.insightsLink}
+                      onClick={() => onViewInsights(objective.id)}
+                    >
+                      View Insights
+                    </button>
+                  )}
+                </div>
+              </div>
+              {underAssessedCount > 0 && (
+                <span
+                  className={styles.assessmentWarning}
+                  title={`${underAssessedCount} sub-objective${underAssessedCount === 1 ? "" : "s"} below the recommended 3 formative and 3 summative activities`}
+                >
+                  <IconWarningTriangle className={styles.assessmentWarningIcon} />
+                  {underAssessedCount} sub-objective{underAssessedCount === 1 ? "" : "s"} need
+                  {underAssessedCount === 1 ? "s" : ""} activities
+                </span>
+              )}
+            </div>
+          )}
+
+          {expanded && (
+            <div className={styles.details}>
+              <ObjectiveExpandedContent
+                key={objective.id}
+                objective={objective}
+                onSelectContent={onSelectContent}
+                onEditSubObjective={(subObjectiveId) =>
+                  onEditSubObjective(objective.id, subObjectiveId)
+                }
+                onRemoveSubObjective={(subObjectiveId) =>
+                  onRemoveSubObjective(objective.id, subObjectiveId)
+                }
+                onViewInsights={() => onViewInsights(objective.id)}
+              />
+            </div>
+          )}
         </div>
-
-        {showDetails && (
-          <div className={styles.details}>
-            {objective.subObjectiveItems && objective.subObjectiveItems.length > 0 && (
-              <section>
-                <h3 className={styles.sectionTitle}>Sub-Objectives</h3>
-                <ul className={styles.list}>
-                  {objective.subObjectiveItems.map((item, index) => {
-                    const isLast =
-                      index === objective.subObjectiveItems!.length - 1;
-                    return (
-                      <li
-                        key={item}
-                        className={`${styles.listItem} ${isLast ? styles.listItemBordered : ""}`}
-                      >
-                        <div className={styles.listItemText}>{item}</div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </section>
-            )}
-
-            {objective.pageLinks && objective.pageLinks.length > 0 && (
-              <section>
-                <h3 className={styles.sectionTitle}>Pages</h3>
-                <ul className={styles.list}>
-                  {objective.pageLinks.map((page, index) => {
-                    const isLast = index === objective.pageLinks!.length - 1;
-                    return (
-                      <li
-                        key={page}
-                        className={isLast ? styles.listItemBordered : styles.listItem}
-                      >
-                        <a href="#" className={styles.pageLink} onClick={(e) => e.preventDefault()}>
-                          {page}
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </section>
-            )}
-
-            <div className={styles.actions}>
-              <button type="button" className={styles.btnDanger}>
-                <IconTrash />
-                Remove
-              </button>
-              <button type="button" className={styles.btnNeutral}>
-                <IconPencil />
-                Reword
-              </button>
-              <button type="button" className={styles.btnNeutral}>
-                <span className={styles.btnPlus}>+</span>
-                Add existing Sub-Objective
-              </button>
-              <button type="button" className={styles.btnNeutral}>
-                <span className={styles.btnPlus}>+</span>
-                Create new Sub-Objective
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </article>
   );

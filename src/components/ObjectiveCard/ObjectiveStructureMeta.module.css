@@ -1,0 +1,23 @@
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--color-text-muted);
+}
+
+.value {
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}

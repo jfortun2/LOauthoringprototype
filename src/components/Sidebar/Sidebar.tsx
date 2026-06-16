@@ -1,14 +1,14 @@
+import { useAppNavigation } from "../../context/AppNavigationContext";
+import { useLayout } from "../../context/LayoutContext";
+import { COURSE_TITLE_SHORT } from "../../data/courseUnits";
+import { IconChevronLeft } from "../icons/Icons";
 import styles from "./Sidebar.module.css";
 
 function NavIconBook() {
   return (
     <span className={styles.navIcon} aria-hidden>
       <svg width="20" height="24" viewBox="0 0 20 24" fill="none">
-        <path
-          d="M2 3h7v18H2V3zm9 0h7v18h-7V3z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
+        <path d="M2 3h7v18H2V3zm9 0h7v18h-7V3z" stroke="currentColor" strokeWidth="1.5" />
       </svg>
     </span>
   );
@@ -37,8 +37,34 @@ function NavIconGraduate() {
 }
 
 export function Sidebar() {
+  const { page, setPage } = useAppNavigation();
+  const { workspaceCollapsed, toggleWorkspace } = useLayout();
+
   return (
-    <aside className={styles.sidebar} data-node-id="2:1704">
+    <aside
+      className={`${styles.sidebar} ${workspaceCollapsed ? styles.sidebarCollapsed : ""}`}
+      aria-hidden={workspaceCollapsed}
+    >
+      <div className={styles.logoBar}>
+        <img
+          className={styles.logo}
+          src="/assets/oli-torus-logo.png"
+          alt="OLI Torus"
+        />
+      </div>
+
+      <div className={styles.minimizeWrap}>
+        <button
+          type="button"
+          className={styles.minimizeBtn}
+          onClick={toggleWorkspace}
+          aria-label="Collapse workspace navigation"
+          title="Collapse workspace"
+        >
+          <IconChevronLeft />
+        </button>
+      </div>
+
       <div className={styles.scroll}>
         <p className={styles.sectionLabel}>Workspace</p>
         <nav className={styles.workspace} aria-label="Workspace roles">
@@ -56,7 +82,7 @@ export function Sidebar() {
           </button>
         </nav>
 
-        <p className={styles.courseName}>Gardening 101</p>
+        <p className={styles.courseName}>{COURSE_TITLE_SHORT}</p>
 
         <nav className={styles.navGroup} aria-label="Course navigation">
           <button type="button" className={`${styles.navItem} ${styles.navItemMuted}`}>
@@ -85,8 +111,8 @@ export function Sidebar() {
             <div className={styles.submenu}>
               <button
                 type="button"
-                className={`${styles.submenuItem} ${styles.submenuItemActive}`}
-                data-node-id="2:1757"
+                className={`${styles.submenuItem} ${page === "objectives" ? styles.submenuItemActive : ""}`}
+                onClick={() => setPage("objectives")}
               >
                 Objectives
               </button>
@@ -99,7 +125,11 @@ export function Sidebar() {
               <button type="button" className={styles.submenuItem}>
                 Bibliography
               </button>
-              <button type="button" className={styles.submenuItem}>
+              <button
+                type="button"
+                className={`${styles.submenuItem} ${page === "curriculum" ? styles.submenuItemActive : ""}`}
+                onClick={() => setPage("curriculum")}
+              >
                 Curriculum
               </button>
               <button type="button" className={styles.submenuItem}>
@@ -125,7 +155,11 @@ export function Sidebar() {
             </span>
           </button>
 
-          <button type="button" className={`${styles.navItem} ${styles.navItemMuted}`}>
+          <button
+            type="button"
+            className={`${styles.navItem} ${styles.navItemMuted} ${page === "insights" ? styles.navItemActive : ""}`}
+            onClick={() => setPage("insights")}
+          >
             <span className={styles.navIcon}>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M4 16l4-8 4 4 4-8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />

@@ -1,0 +1,24 @@
+.expandBtn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-top: 0;
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+}
+
+.expandBtn:hover {
+  background: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+}
+
+.chevron {
+  transition: transform 0.15s ease;
+}
+
+.chevronExpanded {
+  transform: rotate(180deg);
+}

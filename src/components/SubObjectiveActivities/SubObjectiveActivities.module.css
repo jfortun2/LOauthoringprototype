@@ -1,0 +1,200 @@
+.activityPanel {
+  margin-top: 4px;
+}
+
+.tabList {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--color-bg-page);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 16px;
+  color: var(--color-text-muted);
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tab:hover:not(.tabActive) {
+  color: var(--color-text-secondary);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.tabFormative.tabActive {
+  background: var(--color-pill-formative-bg);
+  border: 1px solid var(--color-pill-formative-border);
+  color: var(--color-pill-formative-text);
+  box-shadow: var(--shadow-sm);
+}
+
+.tabSummative.tabActive {
+  background: var(--color-pill-summative-bg);
+  border: 1px solid var(--color-pill-summative-border);
+  color: var(--color-pill-summative-text);
+  box-shadow: var(--shadow-sm);
+}
+
+.tabIcon {
+  flex-shrink: 0;
+}
+
+.tabCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.tabActive .tabCount {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.listWrap {
+  margin-top: 12px;
+}
+
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: fadeIn 0.18s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.activityItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
+  text-align: left;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.activityItemFormative:hover {
+  border-color: var(--color-border-bold);
+  box-shadow: 0 0 0 1px rgba(27, 103, 178, 0.12);
+}
+
+.activityItemSummative:hover {
+  border-color: #f0c4a8;
+  box-shadow: 0 0 0 1px rgba(169, 79, 14, 0.12);
+}
+
+.activityIconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+
+.activityIconFormative {
+  background: var(--color-pill-formative-bg);
+  border: 1px solid var(--color-pill-formative-border);
+  color: var(--color-pill-formative-icon);
+}
+
+.activityIconSummative {
+  background: var(--color-pill-summative-bg);
+  border: 1px solid var(--color-pill-summative-border);
+  color: var(--color-pill-summative-icon);
+}
+
+.activityBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.activityTitle {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--color-link);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.activityMeta {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 16px;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-subtle);
+  text-align: center;
+}
+
+.emptyIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-card);
+  color: var(--color-text-muted);
+}
+
+.emptyTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.emptyText {
+  margin: 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--color-text-muted);
+  max-width: 28rem;
+}

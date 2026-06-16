@@ -11,6 +11,7 @@ type PaginationProps = {
   pageSize: number;
   total: number;
   onPageChange: (page: number) => void;
+  compact?: boolean;
 };
 
 const VISIBLE_PAGES = 5;
@@ -20,6 +21,7 @@ export function Pagination({
   pageSize,
   total,
   onPageChange,
+  compact = false,
 }: PaginationProps) {
   const totalPages = Math.ceil(total / pageSize);
   const start = (page - 1) * pageSize + 1;
@@ -28,10 +30,15 @@ export function Pagination({
   const pages = Array.from({ length: Math.min(VISIBLE_PAGES, totalPages) }, (_, i) => i + 1);
 
   return (
-    <div className={styles.pagination} data-node-id="2:1306">
-      <p className={styles.summary}>
-        Showing result {start} - {end} of {total} total
-      </p>
+    <div
+      className={`${styles.pagination} ${compact ? styles.compact : ""}`}
+      data-node-id="2:1306"
+    >
+      {!compact && (
+        <p className={styles.summary}>
+          Showing result {start} - {end} of {total} total
+        </p>
+      )}
       <nav aria-label="Pagination">
         <ul className={styles.nav}>
           <li>
